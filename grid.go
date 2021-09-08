@@ -45,6 +45,69 @@ func checkForEqualWidth(grid [][]string) bool {
 	return true
 }
 
-func prepareGraph(grid [][]string) {
 
+type pane struct {
+	xStart uint
+	xEnd   uint
+	yStart uint
+	yEnd   uint
+    width  uint
+    height uint
+}
+
+
+func prepareGraph(grid [][]string) {
+	for i := 0; i < len(grid); i++ {
+		for j := 0; j < len(grid[0]); j++ {
+    //        currentGrid := grid[i][j]
+
+		}
+	}
+}
+
+
+func findBoundary(paneName string, startI, startJ int,  grid string[][]) {
+    width := findWidth(paneName, startI, startJ, grid)
+    height := findHeight(paneName, startI, startJ, grid)
+
+    for i := startI; i < startI + height; i++ {
+            for j := startJ; i < startJ + width; j++ {
+                if grid[i][j] != paneName {
+                    return 0, 0, errors.New(fmt.Sprintf("pane -> %s must be present at index %d, %d to make a rectangle", paneName, i, j))
+                }
+            }
+    }
+
+    return height, width, nil
+}
+
+func findWidth(paneName string, startI, startJ int, grid string[][]) (uint, error) {
+    if (paneName != grid[i][j]) {
+        return 0, errors.New(fmt.Sprintf("invalid pane, %s, for indexes %d, %d", paneName, startI, startJ))
+    }
+
+    var width uint := 0
+    for col := startJ; col < len(grid[0]); col++ {
+        if paneName == grid[startI][col] {
+            width++
+        }
+    }
+
+    return width, nil
+}
+
+
+func findHeight(paneName string, startI, startJ int, grid string[][]) (uint, error) {
+    if (paneName != grid[i][j]) {
+        return 0, errors.New(fmt.Sprintf("invalid pane, %s, for indexes %d, %d", paneName, startI, startJ))
+    }
+
+    var height uint := 0
+    for row := startI; row< len(grid); row++ {
+        if paneName == grid[row][startJ] {
+            height++
+        }
+    }
+
+    return height, nil
 }
