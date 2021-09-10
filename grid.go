@@ -65,10 +65,29 @@ func prepareGraph(grid [][]string) {
         // handle error
     }
 
-    
+    var nameToPanes = make(map[string]*pane)
+    var visited = make(map[string]bool)
+    for _, pane := range panes {
+        nameToPanes[pane.name] = pane
+        visited[pane.name] = false
+    }
+}
+
+func dfs(currentPane *pane, grid [][]string, panes map[string]*pane, visited map[string]bool) {
+   leftPaneName := getLeftPaneName(currentPane, grid, panes)
+   var leftPane *pane
+   if len(leftPaneName) > 0 {
+        leftPane = panes[leftPaneName]
+   }
+
+   rightPaneName := getBottomPaneName(currentPane, grid, panes)
+   var rightPane *pane
+   if len(rightPane) > 0 {
+    rightPane = panes[rightPaneName]
+   }
 
 
-
+  
 }
 
 
