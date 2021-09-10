@@ -29,7 +29,7 @@ func main() {
 
 	fmt.Println(viper.GetString("grid"))
 	gridKey := viper.GetString("grid")
-	grid, err := tmuxt.prepareGrid(gridKey)
+	grid, err := tmuxt.PrepareGrid(gridKey)
 	if err != nil {
 		log.Error().Err(err).Msg("invalid grid")
 	}

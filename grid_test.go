@@ -19,7 +19,7 @@ func (g GridSuite) testPrepareGrid(t *testing.T) {
 		t.Fail()
 	}
 	for i := range gridTestCases {
-		result, err := prepareGrid(gridTestCases[i].Grid)
+		result, err := PrepareGrid(gridTestCases[i].Grid)
 		if gridTestCases[i].Error {
 			require.Error(t, err)
 			require.Nil(t, result)
