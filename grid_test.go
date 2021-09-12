@@ -69,3 +69,50 @@ func (g GridSuite) testPreparePanes(t *testing.T) {
 		}
 	}
 }
+
+func (g GridSuite) testPrepareGraph1(t *testing.T) {
+	grid, err := PrepareGrid(`a a b
+						              c d e`)
+	require.NoError(t, err)
+	a, err := prepareGraph(grid)
+	require.NoError(t, err)
+
+	require.NotNil(t, a)
+	matchPaneAttributes(t, a, "a", 0, 2, 0, 1)
+
+	matchPaneAttributes(t, a.Left, "b", 2, 2, 0, 1)
+	require.Nil(t, a.Left.Left)
+	matchPaneAttributes(t, a.Left.Bottom, "e", 2, 2, 1, 1)
+
+	matchPaneAttributes(t, a.Bottom, "c", 0, 1, 1, 1)
+	require.Nil(t, a.Bottom.Bottom)
+	matchPaneAttributes(t, a.Bottom.Left, "d", 1, 1, 1, 1)
+}
+
+func (g GridSuite) testPrepareGraph2(t *testing.T) {
+	grid, err := PrepareGrid(`a b b
+						              c d e
+						              e f e`)
+	require.NoError(t, err)
+	a, err := prepareGraph(grid)
+	require.NoError(t, err)
+
+	require.NotNil(t, a)
+	matchPaneAttributes(t, a, "a", 0, 2, 0, 1)
+
+	matchPaneAttributes(t, a.Left, "b", 2, 2, 0, 1)
+	require.Nil(t, a.Left.Left)
+	matchPaneAttributes(t, a.Left.Bottom, "e", 2, 2, 1, 1)
+
+	matchPaneAttributes(t, a.Bottom, "c", 0, 1, 1, 1)
+	require.Nil(t, a.Bottom.Bottom)
+	matchPaneAttributes(t, a.Bottom.Left, "d", 1, 1, 1, 1)
+}
+
+func matchPaneAttributes(t *testing.T, pane *Pane, name string, xStart, xEnd, yStart, yEnd int) {
+	require.Equal(t, pane.Name, name)
+	require.Equal(t, pane.XStart, xStart)
+	require.Equal(t, pane.XEnd, xEnd)
+	require.Equal(t, pane.YEnd, yEnd)
+	require.Equal(t, pane.YEnd, yEnd)
+}

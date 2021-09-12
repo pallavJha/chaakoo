@@ -16,3 +16,8 @@ func TestPreparePane(t *testing.T) {
 	readTestConfig("prepare_pane_testcases")
 	t.Run("TestPreparePane", suite.testPreparePanes)
 }
+
+func TestPrepareGraph(t *testing.T) {
+	suite := GridSuite{}
+	t.Run("TestPrepareGraph", suite.testPrepareGraph)
+}

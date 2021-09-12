@@ -1,6 +1,5 @@
 grids:
   - id: 1
-    error: "false"
     gridActual: [
       [ "a", "a", "b" ],
       [ "c", "d", "e" ],
@@ -36,7 +35,6 @@ grids:
         yEnd: 1
 
   - id: 2
-    error: "false"
     gridActual: [
       [ "a", "a", "a" ],
       [ "c", "d", "e" ],
@@ -67,7 +65,6 @@ grids:
         yEnd: 1
 
   - id: 3
-    error: "false"
     gridActual: [
       [ "a", "a", "a" ],
       [ "a", "a", "a" ],
@@ -83,7 +80,6 @@ grids:
         yEnd: 1
 
   - id: 4
-    error: "false"
     gridActual: [
       [ "a" ],
     ]
@@ -97,7 +93,6 @@ grids:
         yEnd: 0
 
   - id: 5
-    error: "false"
     gridActual: [
       [ "a" ],
       [ "a" ],
@@ -115,7 +110,6 @@ grids:
         yEnd: 2
 
   - id: 6
-    error: "false"
     gridActual: [
       [ "a", "b" ],
       [ "c", "b" ],
@@ -148,7 +142,6 @@ grids:
         yEnd: 2
 
   - id: 7
-    error: "false"
     gridActual: [
       [ "a", "b" ],
       [ "a", "c" ],
@@ -181,7 +174,6 @@ grids:
         yEnd: 2
 
   - id: 8
-    error: "false"
     gridActual: [
       [ "a", "a", "b" ],
       [ "c", "d", "b" ],
@@ -212,7 +204,6 @@ grids:
         yEnd: 1
 
   - id: 9
-    error: "false"
     gridActual: [
       [ "a", "a", "b" ],
       [ "c", "d", "e" ],
@@ -248,7 +239,6 @@ grids:
         yEnd: 1
 
   - id: 10
-    error: "false"
     gridActual: [
       [ "a", "a", "b" ],
       [ "c", "d", "e" ],
@@ -284,7 +274,6 @@ grids:
         yEnd: 1
 
   - id: 11
-    error: "false"
     gridActual: [
       [ "a", "b", "c" ],
       [ "g", "g", "d" ],
@@ -334,7 +323,6 @@ grids:
         yEnd: 3
 
   - id: 12
-    error: "false"
     gridActual: [
       [ "a", "g", "g" ],
       [ "b", "g", "g" ],
@@ -384,7 +372,6 @@ grids:
         yEnd: 3
 
   - id: 13
-    error: "false"
     gridActual: [
       [ "a", "g", "g" ],
       [ "b", "g", "g" ],
@@ -417,7 +404,6 @@ grids:
         yEnd: 2
 
   - id: 14
-    error: "false"
     gridActual: [
       [ "a", "b", "b" ],
       [ "a", "d", "d" ],
@@ -460,7 +446,6 @@ grids:
         yEnd: 2
 
   - id: 15
-    error: "false"
     gridActual: [
       [ "a", "b", "b" ],
       [ "c", "d", "d" ],
@@ -507,15 +492,7 @@ grids:
         yStart: 2
         yEnd: 2
 
-  - id: 16
-    error: "true"
-    grid: |
-      a a a
-      a
-      a
-
   - id: 17
-    error: "false"
     paneError: "pane -> a must be present at index 1, 1 to make a rectangle"
     grid: |
       a a a
@@ -524,7 +501,6 @@ grids:
 
 
   - id: 17
-    error: "false"
     paneError: "pane -> a must be present at index 2, 2 to make a rectangle"
     grid: |
       a a a

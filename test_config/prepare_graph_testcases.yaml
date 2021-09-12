@@ -1,0 +1,14 @@
+grids:
+  - id: 1
+    error: "false"
+    grid: |
+      a a b
+      c d e
+    graph: |
+      {
+        "name": "a",
+        "xStart": 0,
+        "xEnd": 2,
+        "yStart": 0,
+        "yEnd": 1,
+      }

@@ -82,11 +82,11 @@ func prepareGraph(grid [][]string) (*Pane, error) {
 			visited[pane.Name] = false
 		} else {
 			log.Debug().
-				Str("location",
-					fmt.Sprintf("xStart: %d, xEnd %d, yStart: %d, yEnd: %d", prevPane.XStart, prevPane.XEnd, prevPane.YStart, prevPane.YEnd),
+				Str("grid",
+					fmt.Sprintf("(%d, %d), (%d, %d)", prevPane.XStart, prevPane.YStart, prevPane.XEnd, prevPane.YEnd),
 				).
-				Str("location",
-					fmt.Sprintf("xStart: %d, xEnd %d, yStart: %d, yEnd: %d", pane.XStart, pane.XEnd, pane.YStart, pane.YEnd),
+				Str("grid",
+					fmt.Sprintf("(%d, %d), (%d, %d)", pane.XStart, pane.YStart, pane.XEnd, pane.YEnd),
 				).
 				Msg("pane, %s, appears multiple times")
 		}
@@ -186,7 +186,7 @@ func getLeftPaneName(pane *Pane, grid [][]string, panes map[string]*Pane) string
 	}
 	leftPaneName := grid[i][j]
 	leftPane := panes[leftPaneName]
-	if leftPane.YStart == pane.YStart {
+	if leftPane.YStart == pane.YStart && !leftPane.Visited {
 		return leftPaneName
 	}
 	return ""
@@ -199,7 +199,7 @@ func getBottomPaneName(pane *Pane, grid [][]string, panes map[string]*Pane) stri
 	}
 	bottomPaneName := grid[i][j]
 	bottomPane := panes[bottomPaneName]
-	if bottomPane.XStart == pane.XStart {
+	if bottomPane.XStart == pane.XStart && !bottomPane.Visited{
 		return bottomPaneName
 	}
 	return ""
