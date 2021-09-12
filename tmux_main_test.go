@@ -11,15 +11,15 @@ import (
 const TestConfigDirName = "test_config"
 
 func TestMain(m *testing.M) {
-	readTestConfig()
 	exitCode := m.Run()
 	// clean up activities
 	os.Exit(exitCode)
 
 }
 
-func readTestConfig() {
-	viper.SetConfigName("grids")
+func readTestConfig(configName string) {
+	viper.Reset()
+	viper.SetConfigName(configName)
 	viper.SetConfigType("yaml")
 
 	wd, err := os.Getwd()

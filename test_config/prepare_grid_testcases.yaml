@@ -1,0 +1,175 @@
+grids:
+  - id: 1
+    error: "false"
+    gridActual: [
+      [ "a", "a", "b" ],
+      [ "c", "d", "e" ],
+    ]
+    grid: |
+      a a b
+      c d e
+
+  - id: 2
+    error: "false"
+    gridActual: [
+      [ "a", "a", "a" ],
+      [ "c", "d", "e" ],
+    ]
+    grid: |
+      a a a
+      c d e
+
+  - id: 3
+    error: "false"
+    gridActual: [
+      [ "a", "a", "a" ],
+      [ "a", "a", "a" ],
+    ]
+    grid: |
+      a a a
+      a a a
+
+  - id: 4
+    error: "false"
+    gridActual: [
+      [ "a" ],
+    ]
+    grid: |
+      a
+
+  - id: 5
+    error: "false"
+    gridActual: [
+      [ "a" ],
+      [ "a" ],
+      [ "a" ],
+    ]
+    grid: |
+      a
+      a
+      a
+
+  - id: 6
+    error: "false"
+    gridActual: [
+      [ "a", "b" ],
+      [ "c", "b" ],
+      [ "d", "d" ],
+    ]
+    grid: |
+      a b
+      c b
+      d d
+
+  - id: 7
+    error: "false"
+    gridActual: [
+      [ "a", "b" ],
+      [ "a", "c" ],
+      [ "a", "d" ],
+    ]
+    grid: |
+      a b
+      a c
+      a d
+
+  - id: 8
+    error: "false"
+    gridActual: [
+      [ "a", "a", "b" ],
+      [ "c", "d", "b" ],
+    ]
+    grid: |
+      a a b
+      c d b
+
+  - id: 9
+    error: "false"
+    gridActual: [
+      [ "a", "a", "b" ],
+      [ "c", "d", "e" ],
+    ]
+    grid: |
+      a a b
+      c d e
+
+  - id: 10
+    error: "false"
+    gridActual: [
+      [ "a", "a", "b" ],
+      [ "c", "d", "e" ],
+    ]
+    grid: |
+      a a b
+      c d e
+
+  - id: 11
+    error: "false"
+    gridActual: [
+      [ "a", "b", "c" ],
+      [ "g", "g", "d" ],
+      [ "g", "g", "e" ],
+      [ "g", "g", "f" ],
+    ]
+    grid: |
+      a b c
+      g g d
+      g g e
+      g g f
+
+  - id: 12
+    error: "false"
+    gridActual: [
+      [ "a", "g", "g" ],
+      [ "b", "g", "g" ],
+      [ "c", "g", "g" ],
+      [ "d", "e", "f" ],
+    ]
+    grid: |
+      a g g
+      b g g
+      c g g
+      d e f
+
+  - id: 13
+    error: "false"
+    gridActual: [
+      [ "a", "g", "g" ],
+      [ "b", "g", "g" ],
+      [ "c", "g", "g" ],
+    ]
+    grid: |
+      a g g
+      b g g
+      c g g
+
+  - id: 14
+    error: "false"
+    gridActual: [
+      [ "a", "b", "b" ],
+      [ "a", "d", "d" ],
+      [ "e", "f", "g" ],
+    ]
+    grid: |
+      a b b
+      a d d
+      e f g
+
+  - id: 15
+    error: "false"
+    gridActual: [
+      [ "a", "b", "b" ],
+      [ "c", "d", "d" ],
+      [ "e", "f", "g" ],
+    ]
+    grid: |
+      a b b
+      c d d
+      e f g
+
+  - id: 16
+    error: "true"
+    grid: |
+      a a a
+      a
+      a
