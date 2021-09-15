@@ -77,10 +77,18 @@ func (g GridSuite) testPrepareGraph(t *testing.T) {
 	}
 	for _, testcase := range gridTestCases {
 		t.Log("Test case", testcase.ID)
+		if testcase.ID == 14 {
+			t.Log("For Debug")
+		}
 		grid, err := PrepareGrid(testcase.Grid)
 		require.NoError(t, err)
 		topPane, err := prepareGraph(grid)
-		require.NoError(t, err)
-		require.Equal(t, topPane.AsGrid(), testcase.GridActual)
+		if !testcase.Error {
+			require.NoError(t, err)
+			require.Equal(t, topPane.AsGrid(), testcase.GridActual)
+		} else {
+			require.Error(t, err)
+			require.EqualError(t, err, testcase.PaneError)
+		}
 	}
 }

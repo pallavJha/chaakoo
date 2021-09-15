@@ -8,3 +8,157 @@ grids:
       [ "a", "a", "b" ],
       [ "c", "d", "e" ],
     ]
+  - id: 2
+    error: "false"
+    grid: |
+      a b
+      c d
+    gridActual: [
+      [ "a", "b" ],
+      [ "c", "d" ],
+    ]
+  - id: 3
+    error: "false"
+    grid: |
+      a a
+      a a
+      b c
+    gridActual: [
+      [ "a", "a" ],
+      [ "a", "a" ],
+      [ "b", "c" ],
+    ]
+  - id: 4
+    error: "false"
+    grid: |
+      a a a a a a a
+      a a a a a a a
+      b b b b b b b
+    gridActual: [
+      [ "a", "a", "a", "a", "a", "a", "a" ],
+      [ "a", "a", "a", "a", "a", "a", "a" ],
+      [ "b", "b", "b", "b", "b", "b", "b" ],
+    ]
+  - id: 5
+    error: "false"
+    grid: |
+      a b c
+      g g d
+      g g e
+      g g f
+    gridActual: [
+      [ "a", "b", "c" ],
+      [ "g", "g", "d" ],
+      [ "g", "g", "e" ],
+      [ "g", "g", "f" ],
+    ]
+  - id: 6
+    error: "false"
+    grid: |
+      a b
+      c b
+      d d
+    gridActual: [
+      [ "a", "b" ],
+      [ "c", "b" ],
+      [ "d", "d" ],
+    ]
+  - id: 7
+    error: "false"
+    grid: |
+      a a b c
+      d d e c
+      d d f f
+      g g g g
+      g g g g
+    gridActual: [
+      [ "a", "a", "b", "c" ],
+      [ "d", "d", "e", "c" ],
+      [ "d", "d", "f", "f" ],
+      [ "g", "g", "g", "g" ],
+      [ "g", "g", "g", "g" ],
+    ]
+  - id: 8
+    error: "false"
+    grid: |
+      a a a b b b c
+      d d e e f f l
+      g g g h h h i
+      g g g h h h j
+    gridActual: [
+      [ "a", "a", "a", "b", "b", "b", "c" ],
+      [ "d", "d", "e", "e", "f", "f", "l" ],
+      [ "g", "g", "g", "h", "h", "h", "i" ],
+      [ "g", "g", "g", "h", "h", "h", "j" ],
+    ]
+  - id: 9
+    error: "false"
+    grid: |
+      a a b b c
+      d d e e c
+      g g e e h
+      g g f f h
+    gridActual: [
+      [ "a", "a", "b", "b", "c" ],
+      [ "d", "d", "e", "e", "c" ],
+      [ "g", "g", "e", "e", "h" ],
+      [ "g", "g", "f", "f", "h" ],
+    ]
+  - id: 10
+    error: "false"
+    grid: |
+      a b b h
+      c c d h
+      e f g h
+    gridActual: [
+      [ "a", "b", "b", "h"],
+      [ "c", "c", "d", "h"],
+      [ "e", "f", "g", "h"],
+    ]
+  - id: 11
+    error: "false"
+    grid: |
+      a b c h
+      f e d h
+      g i j h
+    gridActual: [
+      [ "a", "b", "c", "h"],
+      [ "f", "e", "d", "h"],
+      [ "g", "i", "j", "h"],
+    ]
+  - id: 12
+    error: "false"
+    grid: |
+      a b
+      a c
+      d c
+      d e
+      f e
+      f g
+    gridActual: [
+      [ "a", "b"],
+      [ "a", "c"],
+      [ "d", "c"],
+      [ "d", "e"],
+      [ "f", "e"],
+      [ "f", "g"],
+    ]
+  - id: 13
+    error: "true"
+    paneError: "pane, a, appears multiple times"
+    grid: |
+      a a b
+      a a c
+      d d a
+    gridActual: [
+      [ "a", "a", "b"],
+      [ "a", "a", "c"],
+      [ "d", "d", "a"],
+    ]
+  - id: 14
+    error: "true"
+    paneError: "pane, a, must be present at index 1, 1 to make a rectangle"
+    grid: |
+      a a a
+      a d a
+      a a a

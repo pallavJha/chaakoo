@@ -29,13 +29,13 @@ func (p *Pane) AddBottomPane(bottomPane *Pane) {
 	p.Bottom = append(p.Bottom, bottomPane)
 }
 
-func (p *Pane) Reset() {
+func (p *Pane) reset() {
 	p.priorLeftIndex = len(p.Left) - 1
 	p.priorBottomIndex = len(p.Bottom) - 1
 }
 
 func (p *Pane) AsGrid() [][]string {
-	p.Reset()
+	p.reset()
 	var grid = make([][]string, p.Height())
 	for i := range grid {
 		grid[i] = make([]string, p.Width())

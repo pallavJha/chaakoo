@@ -492,8 +492,8 @@ grids:
         yStart: 2
         yEnd: 2
 
-  - id: 17
-    paneError: "pane -> a must be present at index 1, 1 to make a rectangle"
+  - id: 16
+    paneError: "pane, a, must be present at index 1, 1 to make a rectangle"
     grid: |
       a a a
       a b a
@@ -501,7 +501,7 @@ grids:
 
 
   - id: 17
-    paneError: "pane -> a must be present at index 2, 2 to make a rectangle"
+    paneError: "pane, a, must be present at index 2, 2 to make a rectangle"
     grid: |
       a a a
       a a a

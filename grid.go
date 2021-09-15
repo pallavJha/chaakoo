@@ -68,7 +68,8 @@ func prepareGraph(grid [][]string) (*Pane, error) {
 				Str("grid",
 					fmt.Sprintf("(%d, %d), (%d, %d)", pane.XStart, pane.YStart, pane.XEnd, pane.YEnd),
 				).
-				Msg("pane, %s, appears multiple times")
+				Msgf("pane, %s, appears multiple times", pane.Name)
+			return nil, fmt.Errorf("pane, %s, appears multiple times", pane.Name)
 		}
 	}
 
@@ -130,13 +131,18 @@ func dfs(currentPane *Pane, grid [][]string, panes map[string]*Pane, visited map
 			// here the left pane has more height than the currentPane,
 			// so we join the bottom pane to the current pane to increase
 			// the height and
-			currentPane.AddBottomPane(bottomPane)
-			currentPane.YEnd = bottomPane.YEnd
-			bottomPane.Visited = true
-			// then join the left pane
-			currentPane.AddLeftPane(leftPane)
-			currentPane.XEnd = leftPane.XEnd
-			leftPane.Visited = true
+			if bottomPane.Width() == currentPane.Width() {
+				currentPane.AddBottomPane(bottomPane)
+				currentPane.YEnd = bottomPane.YEnd
+				bottomPane.Visited = true
+
+				if leftPane.Height() == currentPane.Height() {
+					// then join the left pane
+					currentPane.AddLeftPane(leftPane)
+					currentPane.XEnd = leftPane.XEnd
+					leftPane.Visited = true
+				}
+			}
 		}
 	}
 	return currentPane
@@ -216,7 +222,7 @@ func findBoundary(paneName string, startI, startJ int, grid [][]string, visited 
 	for i := startI; i < startI+height; i++ {
 		for j := startJ; j < startJ+width; j++ {
 			if grid[i][j] != paneName {
-				return 0, 0, errors.New(fmt.Sprintf("pane -> %s must be present at index %d, %d to make a rectangle", paneName, i, j))
+				return 0, 0, errors.New(fmt.Sprintf("pane, %s, must be present at index %d, %d to make a rectangle", paneName, i, j))
 			} else {
 				visited[i][j] = true
 			}
