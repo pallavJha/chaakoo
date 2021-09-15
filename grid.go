@@ -47,26 +47,6 @@ func checkForEqualWidth(grid [][]string) bool {
 	return true
 }
 
-type Pane struct {
-	Name    string
-	XStart  int
-	XEnd    int
-	YStart  int
-	YEnd    int
-	Visited bool
-	Left    *Pane
-	Bottom  *Pane
-	Parent  *Pane
-}
-
-func (p *Pane) Height() int {
-	return p.YEnd - p.YStart + 1
-}
-
-func (p *Pane) Width() int {
-	return p.XEnd - p.XStart + 1
-}
-
 func prepareGraph(grid [][]string) (*Pane, error) {
 	panes, err := preparePanes(grid)
 	if err != nil {
@@ -127,40 +107,35 @@ func dfs(currentPane *Pane, grid [][]string, panes map[string]*Pane, visited map
 	if leftPane != nil && bottomPane == nil {
 		if leftPane.Height() == currentPane.Height() {
 			// directly add the left pane as they have the same height
-			currentPane.Left = leftPane
+			currentPane.AddLeftPane(leftPane)
 			currentPane.XEnd = leftPane.XEnd
 			leftPane.Visited = true
-			leftPane.Parent = currentPane
 			visited[leftPaneName] = true
 		}
 	} else if leftPane == nil && bottomPane != nil {
 		if bottomPane.Width() == currentPane.Width() {
 			// directly add the bottom pane as they have the same width
-			currentPane.Bottom = bottomPane
+			currentPane.AddBottomPane(bottomPane)
 			currentPane.YEnd = bottomPane.YEnd
 			bottomPane.Visited = true
-			bottomPane.Parent = currentPane
 			visited[bottomPaneName] = true
 		}
 	} else if leftPane != nil && bottomPane != nil {
 		if leftPane.Height() == currentPane.Height() {
 			// directly add the left pane as they have the same height
-			currentPane.Left = leftPane
+			currentPane.AddLeftPane(leftPane)
 			currentPane.XEnd = leftPane.XEnd
-			leftPane.Parent = currentPane
 			leftPane.Visited = true
 		} else if leftPane.Height() > currentPane.Height() {
 			// here the left pane has more height than the currentPane,
 			// so we join the bottom pane to the current pane to increase
 			// the height and
-			currentPane.Bottom = bottomPane
+			currentPane.AddBottomPane(bottomPane)
 			currentPane.YEnd = bottomPane.YEnd
-			bottomPane.Parent = currentPane
 			bottomPane.Visited = true
 			// then join the left pane
-			currentPane.Left = leftPane
+			currentPane.AddLeftPane(leftPane)
 			currentPane.XEnd = leftPane.XEnd
-			leftPane.Parent = currentPane
 			leftPane.Visited = true
 		}
 	}
@@ -199,7 +174,7 @@ func getBottomPaneName(pane *Pane, grid [][]string, panes map[string]*Pane) stri
 	}
 	bottomPaneName := grid[i][j]
 	bottomPane := panes[bottomPaneName]
-	if bottomPane.XStart == pane.XStart && !bottomPane.Visited{
+	if bottomPane.XStart == pane.XStart && !bottomPane.Visited {
 		return bottomPaneName
 	}
 	return ""
