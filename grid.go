@@ -47,7 +47,7 @@ func checkForEqualWidth(grid [][]string) bool {
 	return true
 }
 
-func prepareGraph(grid [][]string) (*Pane, error) {
+func PrepareGraph(grid [][]string) (*Pane, error) {
 	panes, err := preparePanes(grid)
 	if err != nil {
 		log.Debug().Interface("grid", grid).Err(err).Msg("cannot convert grid to panes")

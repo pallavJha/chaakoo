@@ -82,7 +82,7 @@ func (g GridSuite) testPrepareGraph(t *testing.T) {
 		}
 		grid, err := PrepareGrid(testcase.Grid)
 		require.NoError(t, err)
-		topPane, err := prepareGraph(grid)
+		topPane, err := PrepareGraph(grid)
 		if !testcase.Error {
 			require.NoError(t, err)
 			require.Equal(t, topPane.AsGrid(), testcase.GridActual)
