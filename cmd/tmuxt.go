@@ -5,6 +5,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"os"
 	"time"
+	"tmuxt"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -20,7 +21,7 @@ var (
 		Use:   "tmuxt",
 		Short: "A generator for Cobra based Applications",
 		Run: func(cmd *cobra.Command, args []string) {
-			var config *Config
+			var config *tmuxt.Config
 			if err := viper.Unmarshal(config); err != nil {
 				// TODO: add helpful example for a config
 				log.Fatal().Err(err).Msg("cannot unmarshal the config")
@@ -31,6 +32,7 @@ var (
 			if err := config.Parse(); err != nil {
 				log.Fatal().Err(err).Msg("cannot parse the grid for a window")
 			}
+			config.DryRun = dryRun
 		},
 	}
 )

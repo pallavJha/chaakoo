@@ -8,4 +8,5 @@ lint:
 vet:
 	go vet ./...
 
-
+mockgen:
+	mockgen -source tmux_wrapper.go -destination mocks/command_executor.go -package mocks  ICommandExecutor

@@ -1,10 +1,9 @@
-package cmd
+package tmuxt
 
 import (
 	"errors"
 	"fmt"
 	"strings"
-	"tmuxt"
 )
 
 type Config struct {
@@ -43,7 +42,7 @@ func (c *Config) Parse() error {
 type Window struct {
 	Name      string `mapstructure:"name"`
 	Grid      string `mapstructure:"grid"`
-	FirstPane *tmuxt.Pane
+	FirstPane *Pane
 	Commands  map[string]*Command `mapstructure:"commands"`
 }
 
@@ -64,11 +63,11 @@ func (w *Window) Parse() error {
 	if w == nil {
 		return errors.New("window is nil")
 	}
-	grid, err := tmuxt.PrepareGrid(w.Grid)
+	grid, err := PrepareGrid(w.Grid)
 	if err != nil {
 		return err
 	}
-	pane, err := tmuxt.PrepareGraph(grid)
+	pane, err := PrepareGraph(grid)
 	if err != nil {
 		return err
 	}

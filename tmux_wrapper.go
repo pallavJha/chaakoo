@@ -8,7 +8,6 @@ import (
 	"os/exec"
 	"strconv"
 	"strings"
-	"tmuxt/cmd"
 )
 
 var CommandName = "tmux"
@@ -37,12 +36,12 @@ type TmuxCmdResponse struct {
 }
 
 type TmuxWrapper struct {
-	config     cmd.Config
+	config     *Config
 	dimensions *Dimensions
 	executor   ICommandExecutor
 }
 
-func NewTmuxWrapper(config cmd.Config, dimensions *Dimensions) *TmuxWrapper {
+func NewTmuxWrapper(config *Config, dimensions *Dimensions) *TmuxWrapper {
 	wrapper := &TmuxWrapper{
 		config:     config,
 		dimensions: dimensions,
