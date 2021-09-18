@@ -8,8 +8,9 @@ import (
 )
 
 type Config struct {
-	SessionName string             `mapstructure:"name"`
-	Windows     map[string]*Window `mapstructure:"name"`
+	SessionName string    `mapstructure:"name"`
+	Windows     []*Window `mapstructure:"windows"`
+	DryRun      bool
 }
 
 func (c *Config) Validate() error {
