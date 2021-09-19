@@ -55,27 +55,24 @@ func NewTmuxWrapper(config *Config, dimensions *Dimensions) *TmuxWrapper {
 }
 
 func (t *TmuxWrapper) Apply() error {
+	// TODO: check if a session already exists with same name
 	res, err := t.newSession(t.config.SessionName, t.config.Windows[0].Name, t.dimensions)
 	if err != nil {
-		t.killSession(t.config.SessionName)
 		return err
 	}
 	var paneNames = make(map[string]string)
 	paneNames[t.config.Windows[0].FirstPane.Name] = res.PaneID
 	if err = t.walkPane(t.config.Windows[0].FirstPane, paneNames); err != nil {
-		t.killSession(t.config.SessionName)
 		return err
 	}
 	for i := 1; i < len(t.config.Windows); i++ {
 		res, err = t.newWindow(t.config.SessionName, t.config.Windows[i].Name)
 		if err != nil {
-			t.killSession(t.config.SessionName)
 			return err
 		}
 		paneNames = make(map[string]string)
 		paneNames[t.config.Windows[i].FirstPane.Name] = res.PaneID
 		if err = t.walkPane(t.config.Windows[i].FirstPane, paneNames); err != nil {
-			t.killSession(t.config.SessionName)
 			return err
 		}
 	}
@@ -161,14 +158,14 @@ func (t *TmuxWrapper) newSession(sessionID, windowName string, dimensions *Dimen
 		strconv.Itoa(dimensions.Height),
 		"-P",
 		"-F",
-		"\"#{window_id}--#{pane_id}\"",
+		"#{window_id}--#{pane_id}",
 	}
-	stdout, stderr, err := t.executor.Execute(CommandName, args...)
+	stdout, stderr, _, err := t.executor.Execute(CommandName, args...)
 	if err != nil {
 		return nil, NewTmuxError(stdout, stderr, err)
 	}
 	output := stdout
-	strings.TrimSpace(output)
+	output = strings.TrimSpace(output)
 	splitOutput := strings.Split(output, "--")
 	if len(splitOutput) != 2 {
 		log.Debug().Interface("output", splitOutput).Msg("invalid output from list-panes sub command")
@@ -176,8 +173,8 @@ func (t *TmuxWrapper) newSession(sessionID, windowName string, dimensions *Dimen
 	}
 	return &TmuxCmdResponse{
 		SessionID: "",
-		WindowID:  splitOutput[0][1:],
-		PaneID:    splitOutput[1][1:],
+		WindowID:  splitOutput[0],
+		PaneID:    splitOutput[1],
 	}, nil
 }
 
@@ -193,14 +190,14 @@ func (t *TmuxWrapper) newWindow(sessionID, windowName string) (*TmuxCmdResponse,
 		windowName,
 		"-P",
 		"-F",
-		"\"#{window_id}--#{pane_id}\"",
+		"#{window_id}--#{pane_id}",
 	}
-	stdout, stderr, err := t.executor.Execute(CommandName, args...)
+	stdout, stderr, _, err := t.executor.Execute(CommandName, args...)
 	if err != nil {
 		return nil, NewTmuxError(stdout, stderr, err)
 	}
 	output := stdout
-	strings.TrimSpace(output)
+	output = strings.TrimSpace(output)
 	splitOutput := strings.Split(output, "--")
 	if len(splitOutput) != 2 {
 		log.Debug().Interface("output", splitOutput).Msg("invalid output from list-panes sub command")
@@ -208,8 +205,8 @@ func (t *TmuxWrapper) newWindow(sessionID, windowName string) (*TmuxCmdResponse,
 	}
 	return &TmuxCmdResponse{
 		SessionID: "",
-		WindowID:  splitOutput[0][1:],
-		PaneID:    splitOutput[1][1:],
+		WindowID:  splitOutput[0],
+		PaneID:    splitOutput[1],
 	}, nil
 }
 
@@ -226,17 +223,17 @@ func (t *TmuxWrapper) newPane(targetPaneID string, sizeInPercentage int, horizon
 		targetPaneID,
 		"-P",
 		"-F",
-		"\"#{window_id}--#{pane_id}\"",
+		"#{window_id}--#{pane_id}",
 	}
 	if !horizontalSplit {
 		args[1] = "-v"
 	}
-	stdout, stderr, err := t.executor.Execute(CommandName, args...)
+	stdout, stderr, _, err := t.executor.Execute(CommandName, args...)
 	if err != nil {
 		return nil, NewTmuxError(stdout, stderr, err)
 	}
 	output := stdout
-	strings.TrimSpace(output)
+	output = strings.TrimSpace(output)
 	splitOutput := strings.Split(output, "--")
 	if len(splitOutput) != 2 {
 		log.Debug().Interface("output", splitOutput).Msg("invalid output from list-panes sub command")
@@ -244,8 +241,8 @@ func (t *TmuxWrapper) newPane(targetPaneID string, sizeInPercentage int, horizon
 	}
 	return &TmuxCmdResponse{
 		SessionID: "",
-		WindowID:  splitOutput[0][1:],
-		PaneID:    splitOutput[1][1:],
+		WindowID:  splitOutput[0],
+		PaneID:    splitOutput[1],
 	}, nil
 }
 
@@ -257,7 +254,38 @@ func (t TmuxWrapper) killSession(sessionID string) {
 		"-t",
 		sessionID,
 	}
-	stdout, stderr, err := t.executor.Execute(CommandName, args...)
+	stdout, stderr, _, err := t.executor.Execute(CommandName, args...)
+	if err != nil {
+		log.Error().Err(err).Str("stdout", stdout).
+			Str("stderr", stderr).
+			Str("sessionID", sessionID).Msg("unable to kill the session")
+	}
+}
+
+func (t TmuxWrapper) killSession(sessionID string) (bool, error){
+	// tmux has-session -t session2
+	var args = []string{
+		"has-session",
+		"-t",
+		sessionID,
+	}
+	stdout, stderr, _, err := t.executor.Execute(CommandName, args...)
+	if err != nil {
+		log.Error().Err(err).Str("stdout", stdout).
+			Str("stderr", stderr).
+			Str("sessionID", sessionID).Msg("unable to kill the session")
+	}
+}
+
+func (t TmuxWrapper) hasSession(sessionID string) {
+	// tmux kill-session -t session2
+	log.Debug().Msgf("error while creating a new session, killing the session(%s) if it's created", sessionID)
+	var args = []string{
+		"kill-session",
+		"-t",
+		sessionID,
+	}
+	stdout, stderr, _, err := t.executor.Execute(CommandName, args...)
 	if err != nil {
 		log.Error().Err(err).Str("stdout", stdout).
 			Str("stderr", stderr).
@@ -266,7 +294,7 @@ func (t TmuxWrapper) killSession(sessionID string) {
 }
 
 type ICommandExecutor interface {
-	Execute(name string, args ...string) (string, string, error)
+	Execute(name string, args ...string) (string, string, int, error)
 }
 
 type CommandExecutor struct {
@@ -276,7 +304,7 @@ func NewCommandExecutor() *CommandExecutor {
 	return &CommandExecutor{}
 }
 
-func (c *CommandExecutor) Execute(name string, args ...string) (string, string, error) {
+func (c *CommandExecutor) Execute(name string, args ...string) (string, string, int, error) {
 	var stdout bytes.Buffer
 	var stderr bytes.Buffer
 	command := exec.Command(name, args...)
@@ -284,7 +312,12 @@ func (c *CommandExecutor) Execute(name string, args ...string) (string, string, 
 	command.Stdout = &stdout
 	command.Stderr = &stderr
 	err := command.Run()
-	return stdout.String(), stderr.String(), err
+	exitCode := 0
+	if exitError, ok := err.(*exec.ExitError); ok {
+		exitCode = exitError.ExitCode()
+	}
+	log.Debug().Err(err).Str("stdout", stdout.String()).Str("stderr", stdout.String()).Msgf("result...")
+	return stdout.String(), stderr.String(), exitCode, err
 }
 
 type NOOPExecutor struct {
@@ -294,8 +327,8 @@ func NewNOOPExecutor() *NOOPExecutor {
 	return &NOOPExecutor{}
 }
 
-func (c *NOOPExecutor) Execute(name string, args ...string) (string, string, error) {
+func (c *NOOPExecutor) Execute(name string, args ...string) (string, string, int, error) {
 	command := exec.Command(name, args...)
 	log.Debug().Str("command", command.String()).Msgf("executing...")
-	return "@5--%15", "", nil
+	return "@5--%15", "", 0, nil
 }

@@ -30,13 +30,12 @@ func (c tmuxWrapperTestSuite) testTmuxWrapper(t *testing.T) {
 				Grid: "vim1 vim2 vim3\nvim1 vim2 vim3\nvim1 vim2 vim3",
 			},
 		},
-		DryRun: true,
 	}
 	err := config.Validate()
 	require.NoError(t, err)
 	err = config.Parse()
 	require.NoError(t, err)
-	wrapper := NewTmuxWrapper(config, NewDimensions(200, 100))
+	wrapper := NewTmuxWrapper(config, NewDimensions(274, 81))
 	err = wrapper.Apply()
 	require.NoError(t, err)
 }
