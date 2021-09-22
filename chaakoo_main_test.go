@@ -13,9 +13,9 @@ import (
 const TestConfigDirName = "test_config"
 
 func TestMain(m *testing.M) {
+	reconfigureLogger(true)
 	exitCode := m.Run()
 	// clean up activities
-	reconfigureLogger(true)
 	os.Exit(exitCode)
 
 }

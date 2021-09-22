@@ -1,0 +1,57 @@
+configs:
+  - config:
+    - id: 1
+      dimension:
+        width: 200
+        height: 100
+      sessionName: sessionName
+      windows:
+        - grid: |
+            vim  vim  vim  term
+            vim  vim  vim  term
+            play play play play
+          name: window1
+        - grid: |
+            vim1  vim2  vim3
+          name: window2
+        - grid: |
+            vim1
+          name: window3
+        - grid: |
+            vim1  vim2  vim3
+            vim1  vim2  vim3
+            vim1  vim2  vim3
+          name: window4
+      commands:
+        - name: /usr/bin/tmux
+          args: ls -F #{session_name}
+        - name: /usr/bin/tmux
+          args: new-session -d -s sessionName -n window1 -x 200 -y 100 -P -F #{window_id}--#{pane_id}
+          stdout: "@0--%0"
+        - name: /usr/bin/tmux
+          args: splitw -v -p 33 -t %0 -P -F #{window_id}--#{pane_id}
+          stdout: "@0--%1"
+        - name: /usr/bin/tmux
+          args: splitw -h -p 25 -t %0 -P -F #{window_id}--#{pane_id}
+          stdout: "@0--%2"
+        - name: /usr/bin/tmux
+          args: new-window -t sessionName -n window2 -P -F #{window_id}--#{pane_id}
+          stdout: "@1--%3"
+        - name: /usr/bin/tmux
+          args: splitw -h -p 66 -t %3 -P -F #{window_id}--#{pane_id}
+          stdout: "@1--%4"
+        - name: /usr/bin/tmux
+          args: splitw -h -p 50 -t %4 -P -F #{window_id}--#{pane_id}
+          stdout: "@1--%5"
+        - name: /usr/bin/tmux
+          args: new-window -t sessionName -n window3 -P -F #{window_id}--#{pane_id}
+          stdout: "@2--%6"
+        - name: /usr/bin/tmux
+          args: new-window -t sessionName -n window4 -P -F #{window_id}--#{pane_id}
+          stdout: "@3--%7"
+        - name: /usr/bin/tmux
+          args: splitw -h -p 66 -t %7 -P -F #{window_id}--#{pane_id}
+          stdout: "@3--%8"
+        - name: /usr/bin/tmux
+          args: splitw -h -p 50 -t %8 -P -F #{window_id}--#{pane_id}
+          stdout: "@3--%9"

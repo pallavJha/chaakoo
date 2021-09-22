@@ -8,23 +8,23 @@ import (
 
 var NotInTerminalError = errors.New("to get the width and height, the program must run in the terminal")
 
-type Dimensions struct {
+type Dimension struct {
 	Width  int
 	Height int
 }
 
-func NewDimensions(width int, height int) *Dimensions {
-	return &Dimensions{Width: width, Height: height}
+func NewDimension(width int, height int) *Dimension {
+	return &Dimension{Width: width, Height: height}
 }
 
-type TerminalDimensions interface {
-	Dimensions() (*Dimensions, error)
+type TerminalDimension interface {
+	Dimension() (*Dimension, error)
 }
 
-type DimensionsUsingTerm struct {
+type DimensionUsingTerm struct {
 }
 
-func (d *DimensionsUsingTerm) Dimensions() (*Dimensions, error) {
+func (d *DimensionUsingTerm) Dimension() (*Dimension, error) {
 	if !term.IsTerminal(0) {
 		return nil, NotInTerminalError
 	}
@@ -32,5 +32,5 @@ func (d *DimensionsUsingTerm) Dimensions() (*Dimensions, error) {
 	if err != nil {
 		return nil, fmt.Errorf("cannot get the width and height: %w", err)
 	}
-	return NewDimensions(width, height), nil
+	return NewDimension(width, height), nil
 }

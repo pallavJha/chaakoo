@@ -37,14 +37,14 @@ type TmuxCmdResponse struct {
 
 type TmuxWrapper struct {
 	config     *Config
-	dimensions *Dimensions
+	dimension *Dimension
 	executor   ICommandExecutor
 }
 
-func NewTmuxWrapper(config *Config, dimensions *Dimensions) *TmuxWrapper {
+func NewTmuxWrapper(config *Config, dimensions *Dimension) *TmuxWrapper {
 	wrapper := &TmuxWrapper{
 		config:     config,
-		dimensions: dimensions,
+		dimension: dimensions,
 	}
 	if config.DryRun {
 		wrapper.executor = NewNOOPExecutor()
@@ -55,8 +55,13 @@ func NewTmuxWrapper(config *Config, dimensions *Dimensions) *TmuxWrapper {
 }
 
 func (t *TmuxWrapper) Apply() error {
-	// TODO: check if a session already exists with same name
-	res, err := t.newSession(t.config.SessionName, t.config.Windows[0].Name, t.dimensions)
+	if present, err := t.hasSession(t.config.SessionName); err != nil {
+		return err
+	} else if present {
+		log.Debug().Msgf("session with same name, %s, is already present", t.config.SessionName)
+		return fmt.Errorf("session with same name, %s, is already present", t.config.SessionName)
+	}
+	res, err := t.newSession(t.config.SessionName, t.config.Windows[0].Name, t.dimension)
 	if err != nil {
 		return err
 	}
@@ -143,13 +148,13 @@ func (t *TmuxWrapper) walkPane(currentPane *Pane, paneNames map[string]string) e
 	}
 }
 
-func (t *TmuxWrapper) newSession(sessionID, windowName string, dimensions *Dimensions) (*TmuxCmdResponse, error) {
+func (t *TmuxWrapper) newSession(sessionName, windowName string, dimensions *Dimension) (*TmuxCmdResponse, error) {
 	// tmux new-session -d -s session2 -n vim -x 136 -y 80
 	var args = []string{
 		"new-session",
 		"-d",
 		"-s",
-		sessionID,
+		sessionName,
 		"-n",
 		windowName,
 		"-x",
@@ -178,14 +183,14 @@ func (t *TmuxWrapper) newSession(sessionID, windowName string, dimensions *Dimen
 	}, nil
 }
 
-func (t *TmuxWrapper) newWindow(sessionID, windowName string) (*TmuxCmdResponse, error) {
+func (t *TmuxWrapper) newWindow(sessionName, windowName string) (*TmuxCmdResponse, error) {
 	// tmux new-window -t session3 -n vim2  -P -F "#{window_id}--#{pane_id}"
 	// @9--%19
 
 	var args = []string{
 		"new-window",
 		"-t",
-		sessionID,
+		sessionName,
 		"-n",
 		windowName,
 		"-P",
@@ -246,36 +251,49 @@ func (t *TmuxWrapper) newPane(targetPaneID string, sizeInPercentage int, horizon
 	}, nil
 }
 
-func (t TmuxWrapper) killSession(sessionID string) {
+func (t TmuxWrapper) killSession(sessionName string) {
 	// tmux kill-session -t session2
-	log.Debug().Msgf("error while creating a new session, killing the session(%s) if it's created", sessionID)
+	log.Debug().Msgf("error while creating a new session, killing the session(%s) if it's created", sessionName)
 	var args = []string{
 		"kill-session",
 		"-t",
-		sessionID,
+		sessionName,
 	}
 	stdout, stderr, _, err := t.executor.Execute(CommandName, args...)
 	if err != nil {
 		log.Error().Err(err).Str("stdout", stdout).
 			Str("stderr", stderr).
-			Str("sessionID", sessionID).Msg("unable to kill the session")
+			Str("sessionName", sessionName).Msg("unable to kill the session")
 	}
 }
 
-func (t TmuxWrapper) hasSession(sessionID string) {
-	// tmux kill-session -t session2
-	log.Debug().Msgf("error while creating a new session, killing the session(%s) if it's created", sessionID)
+func (t TmuxWrapper) hasSession(sessionName string) (bool, error) {
+	// tmux ls -F #{session_name}
 	var args = []string{
-		"kill-session",
-		"-t",
-		sessionID,
+		"ls",
+		"-F",
+		"#{session_name}",
 	}
 	stdout, stderr, _, err := t.executor.Execute(CommandName, args...)
 	if err != nil {
 		log.Error().Err(err).Str("stdout", stdout).
 			Str("stderr", stderr).
-			Str("sessionID", sessionID).Msg("unable to kill the session")
+			Str("sessionName", sessionName).Msg("unable to get the list of the present sessions")
 	}
+	if err != nil {
+		if !strings.Contains(stderr, "no server running on") {
+			return false, NewTmuxError(stdout, stderr, errors.New("cannot find the list of the sessions"))
+		}
+	}
+	stdout = strings.TrimSpace(stdout)
+	sessionNames := strings.Split(stdout, "\n")
+	for _, name := range sessionNames {
+		name = strings.TrimSpace(name)
+		if name == sessionName {
+			return true, nil
+		}
+	}
+	return false, nil
 }
 
 type ICommandExecutor interface {
@@ -301,7 +319,7 @@ func (c *CommandExecutor) Execute(name string, args ...string) (string, string, 
 	if exitError, ok := err.(*exec.ExitError); ok {
 		exitCode = exitError.ExitCode()
 	}
-	log.Debug().Err(err).Str("stdout", stdout.String()).Str("stderr", stdout.String()).Msgf("result...")
+	log.Debug().Err(err).Str("stdout", stdout.String()).Str("stderr", stderr.String()).Msgf("result")
 	return stdout.String(), stderr.String(), exitCode, err
 }
 

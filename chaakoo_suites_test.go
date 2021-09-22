@@ -22,3 +22,14 @@ func TestPrepareGraph(t *testing.T) {
 	readTestConfig("prepare_graph_testcases")
 	t.Run("TestPrepareGraph", suite.testPrepareGraph)
 }
+
+type TmuxWrapperTestSuite struct {
+
+}
+
+func TestTmuxWrapper_Apply(t *testing.T)  {
+	suite := TmuxWrapperTestSuite{}
+	readTestConfig("tmux_wrapper_apply_test_cases")
+	t.Run("TmuxWrapper", suite.testTmuxWrapperApply)
+
+}
