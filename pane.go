@@ -1,4 +1,4 @@
-package tmuxt
+package chaakoo
 
 type Pane struct {
 	Name             string

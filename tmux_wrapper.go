@@ -1,4 +1,4 @@
-package tmuxt
+package chaakoo
 
 import (
 	"bytes"
@@ -251,21 +251,6 @@ func (t TmuxWrapper) killSession(sessionID string) {
 	log.Debug().Msgf("error while creating a new session, killing the session(%s) if it's created", sessionID)
 	var args = []string{
 		"kill-session",
-		"-t",
-		sessionID,
-	}
-	stdout, stderr, _, err := t.executor.Execute(CommandName, args...)
-	if err != nil {
-		log.Error().Err(err).Str("stdout", stdout).
-			Str("stderr", stderr).
-			Str("sessionID", sessionID).Msg("unable to kill the session")
-	}
-}
-
-func (t TmuxWrapper) killSession(sessionID string) (bool, error){
-	// tmux has-session -t session2
-	var args = []string{
-		"has-session",
 		"-t",
 		sessionID,
 	}

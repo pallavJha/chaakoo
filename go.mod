@@ -1,4 +1,4 @@
-module tmuxt
+module github.com/pallavJha/chaakoo
 
 go 1.16
 

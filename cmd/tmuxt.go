@@ -1,11 +1,11 @@
 package cmd
 
 import (
+	"github.com/pallavJha/chaakoo"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"os"
 	"time"
-	"tmuxt"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -18,10 +18,10 @@ var (
 	dryRun     bool
 
 	rootCmd = &cobra.Command{
-		Use:   "tmuxt",
+		Use:   "chaakoo",
 		Short: "A generator for Cobra based Applications",
 		Run: func(cmd *cobra.Command, args []string) {
-			var config *tmuxt.Config
+			var config *chaakoo.Config
 			if err := viper.Unmarshal(config); err != nil {
 				// TODO: add helpful example for a config
 				log.Fatal().Err(err).Msg("cannot unmarshal the config")
@@ -45,7 +45,7 @@ func Execute() error {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is CWD/tmuxt.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is CWD/chaakoo.yaml)")
 	if err := rootCmd.MarkPersistentFlagRequired("config"); err != nil {
 		log.Fatal().Err(err).Msg("cannot set the flag config required")
 	}
@@ -63,14 +63,14 @@ func readConfig() {
 		log.Debug().Msgf("using %s", cfgFile)
 		viper.SetConfigFile(cfgFile)
 	} else {
-		log.Debug().Msg("config file is not provided, trying to read tmuxt.yaml from the working directory")
+		log.Debug().Msg("config file is not provided, trying to read chaakoo.yaml from the working directory")
 		workingDirectory, err := os.Getwd()
 		if err != nil {
 			log.Fatal().Err(err).Msg("cannot get the current working directory")
 		}
 		viper.AddConfigPath(workingDirectory)
 		viper.SetConfigType("yaml")
-		viper.SetConfigName("tmuxt")
+		viper.SetConfigName("chaakoo")
 	}
 
 	if err := viper.ReadInConfig(); err != nil {

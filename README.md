@@ -1,4 +1,4 @@
-# tmuxt
+# chaakoo
 
 ## TODO
 

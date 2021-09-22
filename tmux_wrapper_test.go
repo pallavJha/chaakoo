@@ -1,4 +1,4 @@
-package tmuxt
+package chaakoo
 
 import (
 	"github.com/brianvoe/gofakeit/v6"

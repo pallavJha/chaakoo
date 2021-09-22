@@ -1,9 +1,12 @@
-package tmuxt
+package chaakoo
+
+import (
+	"fmt"
+	"strings"
+)
 
 import (
 	"errors"
-	"fmt"
-	"strings"
 )
 
 type Config struct {
