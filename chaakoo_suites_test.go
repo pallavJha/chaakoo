@@ -1,6 +1,10 @@
 package chaakoo
 
-import "testing"
+import (
+	"github.com/rs/zerolog/log"
+	"os"
+	"testing"
+)
 
 type GridSuite struct {
 }
@@ -29,7 +33,13 @@ type TmuxWrapperTestSuite struct {
 
 func TestTmuxWrapper_Apply(t *testing.T)  {
 	suite := TmuxWrapperTestSuite{}
-	readTestConfig("tmux_wrapper_apply_test_cases")
+	ci := os.Getenv("CI")
+	log.Info().Str("CI", ci).Msg("ci environment check")
+	if len(ci) > 0 && ci == "true" {
+		readTestConfig("tmux_wrapper_apply_test_cases_ci")
+	} else {
+		readTestConfig("tmux_wrapper_apply_test_cases")
+	}
 	t.Run("TmuxWrapper", suite.testTmuxWrapperApply)
 
 }
