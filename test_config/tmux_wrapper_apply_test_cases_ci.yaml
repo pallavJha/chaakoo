@@ -645,7 +645,7 @@ configs:
         stdout: "@0--%3"
       - name: tmux
         args: |
-          send-keys -t %0 cd /home/runner/code/tmuxt/code C-m
+          send-keys -t %0 cd /home/runner/work/chaakoo/chaakoo/code C-m
       - name: tmux
         args: |
           send-keys -t %0 GO111MODULE=on go get golang.org/x/tools/gopls@latest C-m
