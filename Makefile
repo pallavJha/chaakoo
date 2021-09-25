@@ -2,6 +2,10 @@ test:
 	go test ./... -v -cover -covermode=count -coverprofile=count.out
 	go tool cover -func=count.out
 
+test-race:
+	go test -race -coverprofile=coverage.txt -covermode=atomic
+
+
 lint:
 	golint
 vet:

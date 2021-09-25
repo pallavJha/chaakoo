@@ -1,5 +1,7 @@
 # chaakoo
 
+[![Test](https://github.com/pallavJha/chaakoo/actions/workflows/test.yaml/badge.svg)](https://github.com/pallavJha/chaakoo/actions/workflows/test.yaml)
+
 ## TODO
 
 - [ ] Implement Has-Session

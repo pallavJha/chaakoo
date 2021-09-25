@@ -25,13 +25,11 @@ jobs:
         shell: bash
       - name: Test
         run: make test
+      - name: Test Race
+        run: make test-race
       - name: Vet
         run: make vet
       - name: Lint
         run: make lint
       - name: Build
         run: make build
-      - name: Test for Codecov
-        run: |
-          go test -race -coverprofile=coverage.txt -covermode=atomic
-          bash <(curl -s https://codecov.io/bash)
