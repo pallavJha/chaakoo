@@ -40,6 +40,9 @@ func (c TmuxWrapperTestSuite) testTmuxWrapperApply(t *testing.T) {
 		if testCase.Ignore {
 			continue
 		}
+		if testCase.ID == 13 {
+			t.Log("testing, id", testCase.ID)
+		}
 		t.Log("testing, id", testCase.ID)
 		config := &Config{
 			SessionName: testCase.SessionName,
@@ -60,7 +63,8 @@ func (c TmuxWrapperTestSuite) testTmuxWrapperApply(t *testing.T) {
 			if len(command.Err) > 0 {
 				errorToReturn = errors.New(command.Err)
 			}
-			mockCmdExecutor.EXPECT().Execute(command.Name, arguments).Return(
+			adjustSendKeysArgs(arguments)
+			mockCmdExecutor.EXPECT().Execute(command.Name, adjustSendKeysArgs(arguments)).Return(
 				command.Stdout, command.Stderr, command.ExitCode, errorToReturn,
 			)
 		}
@@ -73,4 +77,14 @@ func (c TmuxWrapperTestSuite) testTmuxWrapperApply(t *testing.T) {
 			require.NoError(t, err)
 		}
 	}
+}
+
+func adjustSendKeysArgs(args []string) []string {
+	if args[0] != "send-keys" {
+		return args
+	}
+	var newArgs = make([]string, 3)
+	copy(newArgs, args[0:3])
+	newArgs = append(newArgs, strings.Join(args[3:len(args) - 1], " "), "C-m")
+	return newArgs
 }

@@ -1,6 +1,6 @@
 configs:
   - id: 1
-    ignore: True
+    ignore: False
     dimension:
       width: 274
       height: 81
@@ -67,7 +67,7 @@ configs:
           splitw -h -p 50 -t %8 -P -F #{window_id}--#{pane_id}
         stdout: "@3--%9"
   - id: 2
-    ignore: True
+    ignore: False
     dimension:
       width: 274
       height: 81
@@ -163,7 +163,7 @@ configs:
           splitw -v -p 50 -t %22 -P -F #{window_id}--#{pane_id}
         stdout: "@7--%25"
   - id: 3
-    ignore: True
+    ignore: False
     dimension:
       width: 274
       height: 81
@@ -415,7 +415,7 @@ configs:
           splitw -v -p 50 -t %75 -P -F #{window_id}--#{pane_id}
         stdout: "@13--%76"
   - id: 4
-    ignore: True
+    ignore: False
     dimension:
       width: 274
       height: 81
@@ -434,7 +434,7 @@ configs:
           sessionName5
           some_random_name_as_well
   - id: 5
-    ignore: True
+    ignore: False
     dimension:
       width: 274
       height: 81
@@ -453,7 +453,7 @@ configs:
         err: message in err
         exitCode: 1234
   - id: 6
-    ignore: True
+    ignore: False
     dimension:
       width: 274
       height: 81
@@ -474,7 +474,7 @@ configs:
         err: message in err
         exitCode: 1234
   - id: 7
-    ignore: True
+    ignore: False
     dimension:
       width: 274
       height: 81
@@ -493,7 +493,7 @@ configs:
           new-session -d -s sessionName7 -n window71 -x 274 -y 81 -P -F #{window_id}--#{pane_id}
         stdout: invalid_message
   - id: 8
-    ignore: True
+    ignore: False
     dimension:
       width: 274
       height: 81
@@ -521,7 +521,7 @@ configs:
         err: message in err
         exitCode: 1234
   - id: 9
-    ignore: True
+    ignore: False
     dimension:
       width: 274
       height: 81
@@ -547,7 +547,7 @@ configs:
           new-window -t sessionName9 -n window92 -P -F #{window_id}--#{pane_id}
         stdout: invalid_message
   - id: 10
-    ignore: True
+    ignore: False
     dimension:
       width: 274
       height: 81
@@ -570,7 +570,7 @@ configs:
           splitw -h -p 50 -t %1 -P -F #{window_id}--#{pane_id}
         stdout: invalid_message
   - id: 11
-    ignore: True
+    ignore: False
     dimension:
       width: 274
       height: 81
@@ -670,3 +670,32 @@ configs:
       - name: tmux
         args: |
           send-keys -t %3 go test ./... C-m
+  - id: 13
+    ignore: False
+    dimension:
+      width: 274
+      height: 81
+    sessionName: sessionName13
+    error:
+    windows:
+      - grid: |
+          vim
+        name: window131
+        commands:
+          - pane: vim
+            command: |
+              vim
+    commands:
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+      - name: tmux
+        args: |
+          new-session -d -s sessionName13 -n window131 -x 274 -y 81 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%0"
+      - name: tmux
+        args: |
+          send-keys -t %0 vim C-m
+        stderr: msg in std error
+        err: msg in error
+        exitCode: 1234
