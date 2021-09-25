@@ -31,3 +31,5 @@ jobs:
         run: make lint
       - name: Build
         run: make build
+      - name: Test for Codecov
+        run: make test-ci

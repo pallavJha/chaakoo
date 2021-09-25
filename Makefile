@@ -2,6 +2,10 @@ test:
 	go test ./... -v -cover -covermode=count -coverprofile=count.out
 	go tool cover -func=count.out
 
+test-ci:
+	go test -race -coverprofile=coverage.txt -covermode=atomic
+	bash <(curl -s https://codecov.io/bash)
+
 lint:
 	golint
 vet:
