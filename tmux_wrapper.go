@@ -36,14 +36,14 @@ type TmuxCmdResponse struct {
 }
 
 type TmuxWrapper struct {
-	config     *Config
+	config    *Config
 	dimension *Dimension
-	executor   ICommandExecutor
+	executor  ICommandExecutor
 }
 
 func NewTmuxWrapper(config *Config, dimensions *Dimension) *TmuxWrapper {
 	wrapper := &TmuxWrapper{
-		config:     config,
+		config:    config,
 		dimension: dimensions,
 	}
 	if config.DryRun {
@@ -63,17 +63,17 @@ func (t *TmuxWrapper) Apply() error {
 	}
 	res, err := t.newSession(t.config.SessionName, t.config.Windows[0].Name, t.dimension)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot create the session: %w", err)
 	}
 	var paneNames = make(map[string]string)
 	paneNames[t.config.Windows[0].FirstPane.Name] = res.PaneID
 	if err = t.walkPane(t.config.Windows[0].FirstPane, paneNames); err != nil {
-		return err
+		return fmt.Errorf("cannot walk the pane: %w", err)
 	}
 	for i := 1; i < len(t.config.Windows); i++ {
 		res, err = t.newWindow(t.config.SessionName, t.config.Windows[i].Name)
 		if err != nil {
-			return err
+			return fmt.Errorf("cannot create the window, %s: %w", t.config.Windows[i].Name, err)
 		}
 		paneNames = make(map[string]string)
 		paneNames[t.config.Windows[i].FirstPane.Name] = res.PaneID
@@ -104,6 +104,7 @@ func (t *TmuxWrapper) walkPane(currentPane *Pane, paneNames map[string]string) e
 				return err
 			}
 			paneNames[leftPane.Name] = res.PaneID
+			currentPane.XEnd = leftPane.XStart - 1
 			err = t.walkPane(leftPane, paneNames)
 			if err != nil {
 				return err
@@ -116,11 +117,12 @@ func (t *TmuxWrapper) walkPane(currentPane *Pane, paneNames map[string]string) e
 				return err
 			}
 			paneNames[bottomPane.Name] = res.PaneID
+			currentPane.YEnd = bottomPane.YStart - 1
 			err = t.walkPane(bottomPane, paneNames)
 			if err != nil {
 				return err
 			}
-		} else if leftPane.Height() > bottomPane.Width() {
+		} else if leftPane.Height() == currentPane.Height() {
 			currentPane.priorLeftIndex--
 			sizeInPercentage := float64(leftPane.Width()*100) / float64(currentPane.Width())
 			res, err := t.newPane(paneNames[currentPane.Name], int(sizeInPercentage), true)
@@ -128,11 +130,12 @@ func (t *TmuxWrapper) walkPane(currentPane *Pane, paneNames map[string]string) e
 				return err
 			}
 			paneNames[leftPane.Name] = res.PaneID
+			currentPane.XEnd = leftPane.XStart - 1
 			err = t.walkPane(leftPane, paneNames)
 			if err != nil {
 				return err
 			}
-		} else {
+		} else if bottomPane.Width() == currentPane.Width() {
 			currentPane.priorBottomIndex--
 			sizeInPercentage := float64(bottomPane.Height()*100) / float64(currentPane.Height())
 			res, err := t.newPane(paneNames[currentPane.Name], int(sizeInPercentage), false)
@@ -140,6 +143,7 @@ func (t *TmuxWrapper) walkPane(currentPane *Pane, paneNames map[string]string) e
 				return err
 			}
 			paneNames[bottomPane.Name] = res.PaneID
+			currentPane.YEnd = bottomPane.YStart - 1
 			err = t.walkPane(bottomPane, paneNames)
 			if err != nil {
 				return err
@@ -173,7 +177,7 @@ func (t *TmuxWrapper) newSession(sessionName, windowName string, dimensions *Dim
 	output = strings.TrimSpace(output)
 	splitOutput := strings.Split(output, "--")
 	if len(splitOutput) != 2 {
-		log.Debug().Interface("output", splitOutput).Msg("invalid output from list-panes sub command")
+		log.Debug().Interface("output", splitOutput).Msg("invalid output from new-session sub command")
 		return nil, NewTmuxError(stdout, "", errors.New("cannot parse the windowID and pane ID from the list-panes output"))
 	}
 	return &TmuxCmdResponse{
@@ -205,8 +209,8 @@ func (t *TmuxWrapper) newWindow(sessionName, windowName string) (*TmuxCmdRespons
 	output = strings.TrimSpace(output)
 	splitOutput := strings.Split(output, "--")
 	if len(splitOutput) != 2 {
-		log.Debug().Interface("output", splitOutput).Msg("invalid output from list-panes sub command")
-		return nil, NewTmuxError(stdout, "", errors.New("cannot parse the windowID and pane ID from the list-panes output"))
+		log.Debug().Interface("output", splitOutput).Msg("invalid output from new-window sub command")
+		return nil, NewTmuxError(stdout, "", errors.New("cannot parse the windowID and pane ID from the new-window output"))
 	}
 	return &TmuxCmdResponse{
 		SessionID: "",
@@ -241,8 +245,8 @@ func (t *TmuxWrapper) newPane(targetPaneID string, sizeInPercentage int, horizon
 	output = strings.TrimSpace(output)
 	splitOutput := strings.Split(output, "--")
 	if len(splitOutput) != 2 {
-		log.Debug().Interface("output", splitOutput).Msg("invalid output from list-panes sub command")
-		return nil, NewTmuxError(stdout, "", errors.New("cannot parse the windowID and pane ID from the list-panes output"))
+		log.Debug().Interface("output", splitOutput).Msg("invalid output from splitw sub command")
+		return nil, NewTmuxError(stdout, "", errors.New("cannot parse the windowID and pane ID from the splitw output"))
 	}
 	return &TmuxCmdResponse{
 		SessionID: "",
@@ -279,10 +283,8 @@ func (t TmuxWrapper) hasSession(sessionName string) (bool, error) {
 		log.Error().Err(err).Str("stdout", stdout).
 			Str("stderr", stderr).
 			Str("sessionName", sessionName).Msg("unable to get the list of the present sessions")
-	}
-	if err != nil {
 		if !strings.Contains(stderr, "no server running on") {
-			return false, NewTmuxError(stdout, stderr, errors.New("cannot find the list of the sessions"))
+			return false, NewTmuxError(stdout, stderr, fmt.Errorf("cannot find the list of the sessions: %w", err))
 		}
 	}
 	stdout = strings.TrimSpace(stdout)

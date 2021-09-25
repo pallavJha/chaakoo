@@ -61,7 +61,7 @@ func (p *Pane) AsGrid() [][]string {
 			p.priorBottomIndex--
 			bottomGrid := bottomPane.AsGrid()
 			fill(p, bottomPane, grid, bottomGrid)
-		} else if leftPane.Height() > bottomPane.Width() {
+		} else if leftPane.Height() > bottomPane.Height() {
 			p.priorLeftIndex--
 			leftGrid := leftPane.AsGrid()
 			fill(p, leftPane, grid, leftGrid)

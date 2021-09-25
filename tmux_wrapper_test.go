@@ -12,6 +12,8 @@ import (
 
 type TmuxWrapperTestCase struct {
 	ID          int
+	Error       string
+	Ignore      bool
 	Dimension   *Dimension
 	SessionName string
 	Windows     []*Window
@@ -35,11 +37,13 @@ func (c TmuxWrapperTestSuite) testTmuxWrapperApply(t *testing.T) {
 		t.Fail()
 	}
 	for _, testCase := range testCases {
+		if testCase.Ignore {
+			continue
+		}
 		t.Log("testing, id", testCase.ID)
 		config := &Config{
 			SessionName: testCase.SessionName,
 			Windows:     testCase.Windows,
-			DryRun:      true,
 		}
 		err := config.Validate()
 		require.NoError(t, err)
@@ -62,6 +66,11 @@ func (c TmuxWrapperTestSuite) testTmuxWrapperApply(t *testing.T) {
 		}
 
 		err = wrapper.Apply()
-		require.NoError(t, err)
+		if len(testCase.Error) > 0 {
+			require.Error(t, err)
+			require.EqualError(t, err, testCase.Error)
+		} else {
+			require.NoError(t, err)
+		}
 	}
 }
