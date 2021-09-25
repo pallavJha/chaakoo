@@ -49,7 +49,7 @@ func init() {
 	if err := rootCmd.MarkPersistentFlagRequired("config"); err != nil {
 		log.Fatal().Err(err).Msg("cannot set the flag config required")
 	}
-	rootCmd.PersistentFlags().BoolVar(&verboseLog, "v", false, "pass true to enable verbose logging")
+	rootCmd.PersistentFlags().BoolVar(&verboseLog, "verbose", false, "pass true to enable verbose logging")
 	rootCmd.PersistentFlags().BoolVar(&verboseLog, "dry-run", false, "if true then commands will not be executed")
 }
 

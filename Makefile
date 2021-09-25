@@ -13,3 +13,6 @@ mockgen:
 prepare:
 	go mod download
 	go install golang.org/x/lint/golint@latest
+
+build:
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o "chaakoo-$(git describe --tags --always)-linux-amd64" cmd/cli/main.go
