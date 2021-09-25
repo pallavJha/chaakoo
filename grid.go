@@ -9,8 +9,10 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-var InvalidDimensionError = errors.New("invalid grid found! all rows must have same number of columns and vice versa")
+// ErrInvalidDimensionError is returned if the grid has invalid dimensions
+var ErrInvalidDimensionError = errors.New("invalid grid found! all rows must have same number of columns and vice versa")
 
+// PrepareGrid converts the freetext grid into a 2D string array
 func PrepareGrid(gridKey string) ([][]string, error) {
 	gridKey = strings.TrimSpace(gridKey)
 	var re = regexp.MustCompile(`\s+`)
@@ -31,8 +33,8 @@ func PrepareGrid(gridKey string) ([][]string, error) {
 	}
 
 	if !checkForEqualWidth(grid) {
-		log.Debug().Interface("grid", grid).Msg(InvalidDimensionError.Error())
-		return nil, InvalidDimensionError
+		log.Debug().Interface("grid", grid).Msg(ErrInvalidDimensionError.Error())
+		return nil, ErrInvalidDimensionError
 	}
 	return grid, nil
 }
@@ -47,6 +49,8 @@ func checkForEqualWidth(grid [][]string) bool {
 	return true
 }
 
+// PrepareGraph converts a 2D grid into a graph of panes
+// It returns the first pane that will contain further panes based on the hierarchy
 func PrepareGraph(grid [][]string) (*Pane, error) {
 	panes, err := preparePanes(grid)
 	if err != nil {
@@ -90,6 +94,8 @@ func PrepareGraph(grid [][]string) (*Pane, error) {
 	return panes[0], err
 }
 
+// dfs - each pane can have left children or bottom children.
+// In this traversal, panes are considered as nodes and each pane can have left and bottom edges
 func dfs(currentPane *Pane, grid [][]string, panes map[string]*Pane, visited map[string]bool) *Pane {
 	leftPaneName := getLeftPaneName(currentPane, grid, panes)
 	var leftPane *Pane
@@ -148,6 +154,7 @@ func dfs(currentPane *Pane, grid [][]string, panes map[string]*Pane, visited map
 	return currentPane
 }
 
+// continueDFS will return false until all the panes(except the first) one has been visited
 func continueDFS(firstPane *Pane, panes map[string]*Pane) bool {
 	for _, pane := range panes {
 		if pane.Name != firstPane.Name {
@@ -222,10 +229,9 @@ func findBoundary(paneName string, startI, startJ int, grid [][]string, visited 
 	for i := startI; i < startI+height; i++ {
 		for j := startJ; j < startJ+width; j++ {
 			if grid[i][j] != paneName {
-				return 0, 0, errors.New(fmt.Sprintf("pane, %s, must be present at index %d, %d to make a rectangle", paneName, i, j))
-			} else {
-				visited[i][j] = true
+				return 0, 0, fmt.Errorf("pane, %s, must be present at index %d, %d to make a rectangle", paneName, i, j)
 			}
+			visited[i][j] = true
 		}
 	}
 

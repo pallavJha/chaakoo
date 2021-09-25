@@ -1,30 +1,35 @@
 package chaakoo
 
+// Pane represents a TMUX pane in a 2D grid
 type Pane struct {
-	Name             string
-	XStart           int
-	XEnd             int
-	YStart           int
-	YEnd             int
-	Visited          bool
-	Left             []*Pane
-	Bottom           []*Pane
-	priorLeftIndex   int
-	priorBottomIndex int
+	Name             string  // Name of the pane
+	XStart           int     // First index in the horizontal direction
+	XEnd             int     // Last index in the horizontal direction
+	YStart           int     // First index in the vertical direction
+	YEnd             int     // Last index in the vertical direction
+	Visited          bool    // If this node was visited while traversal
+	Left             []*Pane // Collection of the panes to the left of the current pane
+	Bottom           []*Pane // Collection of the panes to the bottom of the current pane
+	priorLeftIndex   int     // used while dfs
+	priorBottomIndex int     // used while dfs
 }
 
+// Height returns the height of the pane
 func (p *Pane) Height() int {
 	return p.YEnd - p.YStart + 1
 }
 
+// Width returns the width of the pane
 func (p *Pane) Width() int {
 	return p.XEnd - p.XStart + 1
 }
 
+// AddLeftPane appends left pane to the current pane
 func (p *Pane) AddLeftPane(leftPane *Pane) {
 	p.Left = append(p.Left, leftPane)
 }
 
+// AddBottomPane appends a bottom pane to the current pane
 func (p *Pane) AddBottomPane(bottomPane *Pane) {
 	p.Bottom = append(p.Bottom, bottomPane)
 }
@@ -34,6 +39,7 @@ func (p *Pane) reset() {
 	p.priorBottomIndex = len(p.Bottom) - 1
 }
 
+// AsGrid returns the 2D string array representation of the Pane
 func (p *Pane) AsGrid() [][]string {
 	p.reset()
 	var grid = make([][]string, p.Height())

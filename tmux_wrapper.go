@@ -11,13 +11,17 @@ import (
 	"strings"
 )
 
+// CommandName contains the tmux name.
+// Not hardcoded in the command itself because it can be used in testcases to run a mock command
 var CommandName = "tmux"
 
+// TmuxError is returned after the execution of TMUX commands
 type TmuxError struct {
 	stdout, stderr string
 	err            error
 }
 
+// NewTmuxError is a constructor TmuxError
 func NewTmuxError(stdout, stderr string, err error) *TmuxError {
 	return &TmuxError{
 		stdout: stdout,
@@ -26,22 +30,26 @@ func NewTmuxError(stdout, stderr string, err error) *TmuxError {
 	}
 }
 
+// Error implemented for error interface
 func (t *TmuxError) Error() string {
 	return fmt.Sprintf("err: %v, stdout: %s, stderr: %s", t.err, t.stdout, t.stderr)
 }
 
+// TmuxCmdResponse is a parsed response from Tmux commands
 type TmuxCmdResponse struct {
 	SessionID string
 	WindowID  string
 	PaneID    string
 }
 
+// TmuxWrapper implements the logic to convert the pane and config into TMUX panes and command executions
 type TmuxWrapper struct {
 	config    *Config
 	dimension *Dimension
 	executor  ICommandExecutor
 }
 
+// NewTmuxWrapper constructs a TmuxWrapper
 func NewTmuxWrapper(config *Config, dimensions *Dimension) *TmuxWrapper {
 	wrapper := &TmuxWrapper{
 		config:    config,
@@ -55,6 +63,11 @@ func NewTmuxWrapper(config *Config, dimensions *Dimension) *TmuxWrapper {
 	return wrapper
 }
 
+// Apply does:
+// 	- checks if the requested session is already present
+// 	- creates a new session for the current config
+// 	- creates windows and panes
+// 	- executes the command of the provided config
 func (t *TmuxWrapper) Apply() error {
 	if present, err := t.hasSession(t.config.SessionName); err != nil {
 		return err
@@ -96,9 +109,8 @@ func (t *TmuxWrapper) handleRunCommands(window *Window, paneNames map[string]str
 		if t.config.ExitOnError {
 			log.Error().Err(err).Msgf("error while executing the commands for windows %s", window.Name)
 			return fmt.Errorf("error while executing the commands for windows %s: %w", window.Name, err)
-		} else {
-			log.Debug().Err(err).Msgf("error while executing the commands for windows %s", window.Name)
 		}
+		log.Debug().Err(err).Msgf("error while executing the commands for windows %s", window.Name)
 	}
 	return nil
 }
@@ -370,17 +382,22 @@ func (t TmuxWrapper) sendKeys(targetPaneID, paneName string, actions []string) e
 	return nil
 }
 
+// ICommandExecutor is implemented by command executor
 type ICommandExecutor interface {
 	Execute(name string, args ...string) (string, string, int, error)
 }
 
+// CommandExecutor implements the command execution on a shell
 type CommandExecutor struct {
 }
 
+// NewCommandExecutor constructs a CommandExecutor
 func NewCommandExecutor() *CommandExecutor {
 	return &CommandExecutor{}
 }
 
+// Execute the provided command
+// The first arg is the command name.
 func (c *CommandExecutor) Execute(name string, args ...string) (string, string, int, error) {
 	var stdout bytes.Buffer
 	var stderr bytes.Buffer
@@ -397,13 +414,17 @@ func (c *CommandExecutor) Execute(name string, args ...string) (string, string, 
 	return stdout.String(), stderr.String(), exitCode, err
 }
 
+// NOOPExecutor is used for dry runs
 type NOOPExecutor struct {
 }
 
+// NewNOOPExecutor is a constructor for NOOPExecutor
 func NewNOOPExecutor() *NOOPExecutor {
 	return &NOOPExecutor{}
 }
 
+// Execute just logs the command
+// TODO: return the result based on some logic and conditions instead of hard coded results
 func (c *NOOPExecutor) Execute(name string, args ...string) (string, string, int, error) {
 	command := exec.Command(name, args...)
 	log.Debug().Str("command", command.String()).Msgf("executing...")

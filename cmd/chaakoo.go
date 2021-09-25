@@ -19,7 +19,7 @@ var (
 
 	rootCmd = &cobra.Command{
 		Use:   "chaakoo",
-		Short: "A generator for Cobra based Applications",
+		Short: "chaakoo converts the 2D grids or matrix into TMUX windows and panes",
 		Run: func(cmd *cobra.Command, args []string) {
 			var config *chaakoo.Config
 			if err := viper.Unmarshal(config); err != nil {
