@@ -1,0 +1,509 @@
+grids:
+  - id: 1
+    gridActual: [
+      [ "a", "a", "b" ],
+      [ "c", "d", "e" ],
+    ]
+    grid: |
+      a a b
+      c d e
+    panes:
+      - name: "a"
+        xStart: 0
+        xEnd: 1
+        yStart: 0
+        yEnd: 0
+      - name: "b"
+        xStart: 2
+        xEnd: 2
+        yStart: 0
+        yEnd: 0
+      - name: "c"
+        xStart: 0
+        xEnd: 0
+        yStart: 1
+        yEnd: 1
+      - name: "d"
+        xStart: 1
+        xEnd: 1
+        yStart: 1
+        yEnd: 1
+      - name: "e"
+        xStart: 2
+        xEnd: 2
+        yStart: 1
+        yEnd: 1
+
+  - id: 2
+    gridActual: [
+      [ "a", "a", "a" ],
+      [ "c", "d", "e" ],
+    ]
+    grid: |
+      a a a
+      c d e
+    panes:
+      - name: "a"
+        xStart: 0
+        xEnd: 2
+        yStart: 0
+        yEnd: 0
+      - name: "c"
+        xStart: 0
+        xEnd: 0
+        yStart: 1
+        yEnd: 1
+      - name: "d"
+        xStart: 1
+        xEnd: 1
+        yStart: 1
+        yEnd: 1
+      - name: "e"
+        xStart: 2
+        xEnd: 2
+        yStart: 1
+        yEnd: 1
+
+  - id: 3
+    gridActual: [
+      [ "a", "a", "a" ],
+      [ "a", "a", "a" ],
+    ]
+    grid: |
+      a a a
+      a a a
+    panes:
+      - name: "a"
+        xStart: 0
+        xEnd: 2
+        yStart: 0
+        yEnd: 1
+
+  - id: 4
+    gridActual: [
+      [ "a" ],
+    ]
+    grid: |
+      a
+    panes:
+      - name: "a"
+        xStart: 0
+        xEnd: 0
+        yStart: 0
+        yEnd: 0
+
+  - id: 5
+    gridActual: [
+      [ "a" ],
+      [ "a" ],
+      [ "a" ],
+    ]
+    grid: |
+      a
+      a
+      a
+    panes:
+      - name: "a"
+        xStart: 0
+        xEnd: 0
+        yStart: 0
+        yEnd: 2
+
+  - id: 6
+    gridActual: [
+      [ "a", "b" ],
+      [ "c", "b" ],
+      [ "d", "d" ],
+    ]
+    grid: |
+      a b
+      c b
+      d d
+    panes:
+      - name: "a"
+        xStart: 0
+        xEnd: 0
+        yStart: 0
+        yEnd: 0
+      - name: "b"
+        xStart: 1
+        xEnd: 1
+        yStart: 0
+        yEnd: 1
+      - name: "c"
+        xStart: 0
+        xEnd: 0
+        yStart: 1
+        yEnd: 1
+      - name: "d"
+        xStart: 0
+        xEnd: 1
+        yStart: 2
+        yEnd: 2
+
+  - id: 7
+    gridActual: [
+      [ "a", "b" ],
+      [ "a", "c" ],
+      [ "a", "d" ],
+    ]
+    grid: |
+      a b
+      a c
+      a d
+    panes:
+      - name: "a"
+        xStart: 0
+        xEnd: 0
+        yStart: 0
+        yEnd: 2
+      - name: "b"
+        xStart: 1
+        xEnd: 1
+        yStart: 0
+        yEnd: 0
+      - name: "c"
+        xStart: 1
+        xEnd: 1
+        yStart: 1
+        yEnd: 1
+      - name: "d"
+        xStart: 1
+        xEnd: 1
+        yStart: 2
+        yEnd: 2
+
+  - id: 8
+    gridActual: [
+      [ "a", "a", "b" ],
+      [ "c", "d", "b" ],
+    ]
+    grid: |
+      a a b
+      c d b
+    panes:
+      - name: "a"
+        xStart: 0
+        xEnd: 1
+        yStart: 0
+        yEnd: 0
+      - name: "b"
+        xStart: 2
+        xEnd: 2
+        yStart: 0
+        yEnd: 1
+      - name: "c"
+        xStart: 0
+        xEnd: 0
+        yStart: 1
+        yEnd: 1
+      - name: "d"
+        xStart: 1
+        xEnd: 1
+        yStart: 1
+        yEnd: 1
+
+  - id: 9
+    gridActual: [
+      [ "a", "a", "b" ],
+      [ "c", "d", "e" ],
+    ]
+    grid: |
+      a a b
+      c d e
+    panes:
+      - name: "a"
+        xStart: 0
+        xEnd: 1
+        yStart: 0
+        yEnd: 0
+      - name: "b"
+        xStart: 2
+        xEnd: 2
+        yStart: 0
+        yEnd: 0
+      - name: "c"
+        xStart: 0
+        xEnd: 0
+        yStart: 1
+        yEnd: 1
+      - name: "d"
+        xStart: 1
+        xEnd: 1
+        yStart: 1
+        yEnd: 1
+      - name: "e"
+        xStart: 2
+        xEnd: 2
+        yStart: 1
+        yEnd: 1
+
+  - id: 10
+    gridActual: [
+      [ "a", "a", "b" ],
+      [ "c", "d", "e" ],
+    ]
+    grid: |
+      a a b
+      c d e
+    panes:
+      - name: "a"
+        xStart: 0
+        xEnd: 1
+        yStart: 0
+        yEnd: 0
+      - name: "b"
+        xStart: 2
+        xEnd: 2
+        yStart: 0
+        yEnd: 0
+      - name: "c"
+        xStart: 0
+        xEnd: 0
+        yStart: 1
+        yEnd: 1
+      - name: "d"
+        xStart: 1
+        xEnd: 1
+        yStart: 1
+        yEnd: 1
+      - name: "e"
+        xStart: 2
+        xEnd: 2
+        yStart: 1
+        yEnd: 1
+
+  - id: 11
+    gridActual: [
+      [ "a", "b", "c" ],
+      [ "g", "g", "d" ],
+      [ "g", "g", "e" ],
+      [ "g", "g", "f" ],
+    ]
+    grid: |
+      a b c
+      g g d
+      g g e
+      g g f
+    panes:
+      - name: "a"
+        xStart: 0
+        xEnd: 0
+        yStart: 0
+        yEnd: 0
+      - name: "b"
+        xStart: 1
+        xEnd: 1
+        yStart: 0
+        yEnd: 0
+      - name: "c"
+        xStart: 2
+        xEnd: 2
+        yStart: 0
+        yEnd: 0
+      - name: "g"
+        xStart: 0
+        xEnd: 1
+        yStart: 1
+        yEnd: 3
+      - name: "d"
+        xStart: 2
+        xEnd: 2
+        yStart: 1
+        yEnd: 1
+      - name: "e"
+        xStart: 2
+        xEnd: 2
+        yStart: 2
+        yEnd: 2
+      - name: "f"
+        xStart: 2
+        xEnd: 2
+        yStart: 3
+        yEnd: 3
+
+  - id: 12
+    gridActual: [
+      [ "a", "g", "g" ],
+      [ "b", "g", "g" ],
+      [ "c", "g", "g" ],
+      [ "d", "e", "f" ],
+    ]
+    grid: |
+      a g g
+      b g g
+      c g g
+      d e f
+    panes:
+      - name: "a"
+        xStart: 0
+        xEnd: 0
+        yStart: 0
+        yEnd: 0
+      - name: "g"
+        xStart: 1
+        xEnd: 2
+        yStart: 0
+        yEnd: 2
+      - name: "b"
+        xStart: 0
+        xEnd: 0
+        yStart: 1
+        yEnd: 1
+      - name: "c"
+        xStart: 0
+        xEnd: 0
+        yStart: 2
+        yEnd: 2
+      - name: "d"
+        xStart: 0
+        xEnd: 0
+        yStart: 3
+        yEnd: 3
+      - name: "e"
+        xStart: 1
+        xEnd: 1
+        yStart: 3
+        yEnd: 3
+      - name: "f"
+        xStart: 2
+        xEnd: 2
+        yStart: 3
+        yEnd: 3
+
+  - id: 13
+    gridActual: [
+      [ "a", "g", "g" ],
+      [ "b", "g", "g" ],
+      [ "c", "g", "g" ],
+    ]
+    grid: |
+      a g g
+      b g g
+      c g g
+    panes:
+      - name: "a"
+        xStart: 0
+        xEnd: 0
+        yStart: 0
+        yEnd: 0
+      - name: "b"
+        xStart: 0
+        xEnd: 0
+        yStart: 1
+        yEnd: 1
+      - name: "c"
+        xStart: 0
+        xEnd: 0
+        yStart: 2
+        yEnd: 2
+      - name: "g"
+        xStart: 1
+        xEnd: 2
+        yStart: 0
+        yEnd: 2
+
+  - id: 14
+    gridActual: [
+      [ "a", "b", "b" ],
+      [ "a", "d", "d" ],
+      [ "e", "f", "g" ],
+    ]
+    grid: |
+      a b b
+      a d d
+      e f g
+    panes:
+      - name: "a"
+        xStart: 0
+        xEnd: 0
+        yStart: 0
+        yEnd: 1
+      - name: "b"
+        xStart: 1
+        xEnd: 2
+        yStart: 0
+        yEnd: 0
+      - name: "d"
+        xStart: 1
+        xEnd: 2
+        yStart: 1
+        yEnd: 1
+      - name: "e"
+        xStart: 0
+        xEnd: 0
+        yStart: 2
+        yEnd: 2
+      - name: "f"
+        xStart: 1
+        xEnd: 1
+        yStart: 2
+        yEnd: 2
+      - name: "g"
+        xStart: 2
+        xEnd: 2
+        yStart: 2
+        yEnd: 2
+
+  - id: 15
+    gridActual: [
+      [ "a", "b", "b" ],
+      [ "c", "d", "d" ],
+      [ "e", "f", "g" ],
+    ]
+    grid: |
+      a b b
+      c d d
+      e f g
+    panes:
+      - name: "a"
+        xStart: 0
+        xEnd: 0
+        yStart: 0
+        yEnd: 0
+      - name: "b"
+        xStart: 1
+        xEnd: 2
+        yStart: 0
+        yEnd: 0
+      - name: "c"
+        xStart: 0
+        xEnd: 0
+        yStart: 1
+        yEnd: 1
+      - name: "d"
+        xStart: 1
+        xEnd: 2
+        yStart: 1
+        yEnd: 1
+      - name: "e"
+        xStart: 0
+        xEnd: 0
+        yStart: 2
+        yEnd: 2
+      - name: "f"
+        xStart: 1
+        xEnd: 1
+        yStart: 2
+        yEnd: 2
+      - name: "g"
+        xStart: 2
+        xEnd: 2
+        yStart: 2
+        yEnd: 2
+
+  - id: 16
+    paneError: "pane, a, must be present at index 1, 1 to make a rectangle"
+    grid: |
+      a a a
+      a b a
+      a a a
+
+
+  - id: 17
+    paneError: "pane, a, must be present at index 2, 2 to make a rectangle"
+    grid: |
+      a a a
+      a a a
+      a a b
+

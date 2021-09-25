@@ -1,0 +1,701 @@
+configs:
+  - id: 1
+    ignore: False
+    dimension:
+      width: 274
+      height: 81
+    sessionName: sessionName
+    windows:
+      - grid: |
+          vim  vim  vim  term
+          vim  vim  vim  term
+          play play play play
+        name: window1
+      - grid: |
+          vim1  vim2  vim3
+        name: window2
+      - grid: |
+          vim1
+        name: window3
+      - grid: |
+          vim1  vim2  vim3
+          vim1  vim2  vim3
+          vim1  vim2  vim3
+        name: window4
+    commands:
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+      - name: tmux
+        args: |
+          new-session -d -s sessionName -n window1 -x 274 -y 81 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%0"
+      - name: tmux
+        args: |
+          splitw -v -p 33 -t %0 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%1"
+      - name: tmux
+        args: |
+          splitw -h -p 25 -t %0 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%2"
+      - name: tmux
+        args: |
+          new-window -t sessionName -n window2 -P -F #{window_id}--#{pane_id}
+        stdout: "@1--%3"
+      - name: tmux
+        args: |
+          splitw -h -p 66 -t %3 -P -F #{window_id}--#{pane_id}
+        stdout: "@1--%4"
+      - name: tmux
+        args: |
+          splitw -h -p 50 -t %4 -P -F #{window_id}--#{pane_id}
+        stdout: "@1--%5"
+      - name: tmux
+        args: |
+          new-window -t sessionName -n window3 -P -F #{window_id}--#{pane_id}
+        stdout: "@2--%6"
+      - name: tmux
+        args: |
+          new-window -t sessionName -n window4 -P -F #{window_id}--#{pane_id}
+        stdout: "@3--%7"
+      - name: tmux
+        args: |
+          splitw -h -p 66 -t %7 -P -F #{window_id}--#{pane_id}
+        stdout: "@3--%8"
+      - name: tmux
+        args: |
+          splitw -h -p 50 -t %8 -P -F #{window_id}--#{pane_id}
+        stdout: "@3--%9"
+  - id: 2
+    ignore: False
+    dimension:
+      width: 274
+      height: 81
+    sessionName: sessionName2
+    windows:
+      - grid: |
+          vim   vim
+          vim   vim
+          build lsp
+        name: window1
+      - grid: |
+          vim   vim   vim   vim   vim   vim   vim
+          vim   vim   vim   vim   vim   vim   vim
+          build build build build build build build
+        name: window2
+      - grid: |
+          term    build   cat
+          grafana grafana df
+          grafana grafana egrep
+          grafana grafana find
+        name: window3
+      - grid: |
+          log build
+          cat build
+          df  df
+        name: window4
+    commands:
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+      - name: tmux
+        args: |
+          new-session -d -s sessionName2 -n window1 -x 274 -y 81 -P -F #{window_id}--#{pane_id}
+        stdout: "@4--%10"
+      - name: tmux
+        args: |
+          splitw -v -p 33 -t %10 -P -F #{window_id}--#{pane_id}
+        stdout: "@4--%11"
+      - name: tmux
+        args: |
+          splitw -h -p 50 -t %11 -P -F #{window_id}--#{pane_id}
+        stdout: "@4--%12"
+      - name: tmux
+        args: |
+          new-window -t sessionName2 -n window2 -P -F #{window_id}--#{pane_id}
+        stdout: "@5--%13"
+      - name: tmux
+        args: |
+          splitw -v -p 33 -t %13 -P -F #{window_id}--#{pane_id}
+        stdout: "@5--%14"
+      - name: tmux
+        args: |
+          new-window -t sessionName2 -n window3 -P -F #{window_id}--#{pane_id}
+        stdout: "@6--%15"
+      - name: tmux
+        args: |
+          splitw -h -p 33 -t %15 -P -F #{window_id}--#{pane_id}
+        stdout: "@6--%16"
+      - name: tmux
+        args: |
+          splitw -v -p 75 -t %16 -P -F #{window_id}--#{pane_id}
+        stdout: "@6--%17"
+      - name: tmux
+        args: |
+          splitw -v -p 66 -t %17 -P -F #{window_id}--#{pane_id}
+        stdout: "@6--%18"
+      - name: tmux
+        args: |
+          splitw -v -p 50 -t %18 -P -F #{window_id}--#{pane_id}
+        stdout: "@6--%19"
+      - name: tmux
+        args: |
+          splitw -v -p 75 -t %15 -P -F #{window_id}--#{pane_id}
+        stdout: "@6--%20"
+      - name: tmux
+        args: |
+          splitw -h -p 50 -t %15 -P -F #{window_id}--#{pane_id}
+        stdout: "@6--%21"
+      - name: tmux
+        args: |
+          new-window -t sessionName2 -n window4 -P -F #{window_id}--#{pane_id}
+        stdout: "@7--%22"
+      - name: tmux
+        args: |
+          splitw -v -p 33 -t %22 -P -F #{window_id}--#{pane_id}
+        stdout: "@7--%23"
+      - name: tmux
+        args: |
+          splitw -h -p 50 -t %22 -P -F #{window_id}--#{pane_id}
+        stdout: "@7--%24"
+      - name: tmux
+        args: |
+          splitw -v -p 50 -t %22 -P -F #{window_id}--#{pane_id}
+        stdout: "@7--%25"
+  - id: 3
+    ignore: False
+    dimension:
+      width: 274
+      height: 81
+    sessionName: sessionName3
+    windows:
+      - grid: |
+          arandr  arandr  bzip    cat
+          vim     vim     err     cat
+          vim     vim     file    file
+          grafana grafana grafana grafana
+          grafana grafana grafana grafana
+        name: window31
+      - grid: |
+          build   build   build   bzip  bzip bzip cat
+          dd      dd      egrep   egrep find find locate
+          grafana grafana grafana htop  htop htop ip
+          grafana grafana grafana htop  htop htop jobs
+        name: window32
+      - grid: |
+          vim  vim  build build cat
+          dd   dd   egrep egrep cat
+          gvim gvim egrep egrep htop
+          gvim gvim find  find  htop
+        name: window33
+      - grid: |
+          arandr build build htop
+          cat    cat   dd    htop
+          egrep  find  grep  htop
+        name: window34
+      - grid: |
+          arandr bzip  cat  htop
+          find   egrep dd   htop
+          grep   i3    jobs htop
+        name: window35
+      - grid: |
+          arandr bzip
+          arandr cat
+          dd     cat
+          dd     egrep
+          find   egrep
+          find   grep
+        name: window36
+    commands:
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+      - name: tmux
+        args: |
+          new-session -d -s sessionName3 -n window31 -x 274 -y 81 -P -F #{window_id}--#{pane_id}
+        stdout: "@8--%26"
+      - name: tmux
+        args: |
+          splitw -v -p 40 -t %26 -P -F #{window_id}--#{pane_id}
+        stdout: "@8--%27"
+      - name: tmux
+        args: |
+          splitw -h -p 50 -t %26 -P -F #{window_id}--#{pane_id}
+        stdout: "@8--%28"
+      - name: tmux
+        args: |
+          splitw -v -p 33 -t %28 -P -F #{window_id}--#{pane_id}
+        stdout: "@8--%29"
+      - name: tmux
+        args: |
+          splitw -h -p 50 -t %28 -P -F #{window_id}--#{pane_id}
+        stdout: "@8--%30"
+      - name: tmux
+        args: |
+          splitw -v -p 50 -t %28 -P -F #{window_id}--#{pane_id}
+        stdout: "@8--%31"
+      - name: tmux
+        args: |
+          splitw -v -p 66 -t %26 -P -F #{window_id}--#{pane_id}
+        stdout: "@8--%32"
+      - name: tmux
+        args: |
+          new-window -t sessionName3 -n window32 -P -F #{window_id}--#{pane_id}
+        stdout: "@9--%33"
+      - name: tmux
+        args: |
+          splitw -h -p 14 -t %33 -P -F #{window_id}--#{pane_id}
+        stdout: "@9--%34"
+      - name: tmux
+        args: |
+          splitw -v -p 75 -t %34 -P -F #{window_id}--#{pane_id}
+        stdout: "@9--%35"
+      - name: tmux
+        args: |
+          splitw -v -p 66 -t %35 -P -F #{window_id}--#{pane_id}
+        stdout: "@9--%36"
+      - name: tmux
+        args: |
+          splitw -v -p 50 -t %36 -P -F #{window_id}--#{pane_id}
+        stdout: "@9--%37"
+      - name: tmux
+        args: |
+          splitw -v -p 75 -t %33 -P -F #{window_id}--#{pane_id}
+        stdout: "@9--%38"
+      - name: tmux
+        args: |
+          splitw -v -p 66 -t %38 -P -F #{window_id}--#{pane_id}
+        stdout: "@9--%39"
+      - name: tmux
+        args: |
+          splitw -h -p 50 -t %39 -P -F #{window_id}--#{pane_id}
+        stdout: "@9--%40"
+      - name: tmux
+        args: |
+          splitw -h -p 66 -t %38 -P -F #{window_id}--#{pane_id}
+        stdout: "@9--%41"
+      - name: tmux
+        args: |
+          splitw -h -p 50 -t %41 -P -F #{window_id}--#{pane_id}
+        stdout: "@9--%42"
+      - name: tmux
+        args: |
+          splitw -h -p 50 -t %33 -P -F #{window_id}--#{pane_id}
+        stdout: "@9--%43"
+      - name: tmux
+        args: |
+          new-window -t sessionName3 -n window33 -P -F #{window_id}--#{pane_id}
+        stdout: "@10--%44"
+      - name: tmux
+        args: |
+          splitw -h -p 60 -t %44 -P -F #{window_id}--#{pane_id}
+        stdout: "@10--%45"
+      - name: tmux
+        args: |
+          splitw -h -p 33 -t %45 -P -F #{window_id}--#{pane_id}
+        stdout: "@10--%46"
+      - name: tmux
+        args: |
+          splitw -v -p 50 -t %46 -P -F #{window_id}--#{pane_id}
+        stdout: "@10--%47"
+      - name: tmux
+        args: |
+          splitw -v -p 75 -t %45 -P -F #{window_id}--#{pane_id}
+        stdout: "@10--%48"
+      - name: tmux
+        args: |
+          splitw -v -p 33 -t %48 -P -F #{window_id}--#{pane_id}
+        stdout: "@10--%49"
+      - name: tmux
+        args: |
+          splitw -v -p 75 -t %44 -P -F #{window_id}--#{pane_id}
+        stdout: "@10--%50"
+      - name: tmux
+        args: |
+          splitw -v -p 66 -t %50 -P -F #{window_id}--#{pane_id}
+        stdout: "@10--%51"
+      - name: tmux
+        args: |
+          new-window -t sessionName3 -n window34 -P -F #{window_id}--#{pane_id}
+        stdout: "@11--%52"
+      - name: tmux
+        args: |
+          splitw -h -p 25 -t %52 -P -F #{window_id}--#{pane_id}
+        stdout: "@11--%53"
+      - name: tmux
+        args: |
+          splitw -v -p 66 -t %52 -P -F #{window_id}--#{pane_id}
+        stdout: "@11--%54"
+      - name: tmux
+        args: |
+          splitw -h -p 33 -t %54 -P -F #{window_id}--#{pane_id}
+        stdout: "@11--%55"
+      - name: tmux
+        args: |
+          splitw -v -p 50 -t %55 -P -F #{window_id}--#{pane_id}
+        stdout: "@11--%56"
+      - name: tmux
+        args: |
+          splitw -v -p 50 -t %54 -P -F #{window_id}--#{pane_id}
+        stdout: "@11--%57"
+      - name: tmux
+        args: |
+          splitw -h -p 50 -t %57 -P -F #{window_id}--#{pane_id}
+        stdout: "@11--%58"
+      - name: tmux
+        args: |
+          splitw -h -p 66 -t %52 -P -F #{window_id}--#{pane_id}
+        stdout: "@11--%59"
+      - name: tmux
+        args: |
+          new-window -t sessionName3 -n window35 -P -F #{window_id}--#{pane_id}
+        stdout: "@12--%60"
+      - name: tmux
+        args: |
+          splitw -h -p 75 -t %60 -P -F #{window_id}--#{pane_id}
+        stdout: "@12--%61"
+      - name: tmux
+        args: |
+          splitw -h -p 66 -t %61 -P -F #{window_id}--#{pane_id}
+        stdout: "@12--%62"
+      - name: tmux
+        args: |
+          splitw -h -p 50 -t %62 -P -F #{window_id}--#{pane_id}
+        stdout: "@12--%63"
+      - name: tmux
+        args: |
+          splitw -v -p 66 -t %62 -P -F #{window_id}--#{pane_id}
+        stdout: "@12--%64"
+      - name: tmux
+        args: |
+          splitw -v -p 50 -t %64 -P -F #{window_id}--#{pane_id}
+        stdout: "@12--%65"
+      - name: tmux
+        args: |
+          splitw -v -p 66 -t %61 -P -F #{window_id}--#{pane_id}
+        stdout: "@12--%66"
+      - name: tmux
+        args: |
+          splitw -v -p 50 -t %66 -P -F #{window_id}--#{pane_id}
+        stdout: "@12--%67"
+      - name: tmux
+        args: |
+          splitw -v -p 66 -t %60 -P -F #{window_id}--#{pane_id}
+        stdout: "@12--%68"
+      - name: tmux
+        args: |
+          splitw -v -p 50 -t %68 -P -F #{window_id}--#{pane_id}
+        stdout: "@12--%69"
+      - name: tmux
+        args: |
+          new-window -t sessionName3 -n window36 -P -F #{window_id}--#{pane_id}
+        stdout: "@13--%70"
+      - name: tmux
+        args: |
+          splitw -h -p 50 -t %70 -P -F #{window_id}--#{pane_id}
+        stdout: "@13--%71"
+      - name: tmux
+        args: |
+          splitw -v -p 83 -t %71 -P -F #{window_id}--#{pane_id}
+        stdout: "@13--%72"
+      - name: tmux
+        args: |
+          splitw -v -p 60 -t %72 -P -F #{window_id}--#{pane_id}
+        stdout: "@13--%73"
+      - name: tmux
+        args: |
+          splitw -v -p 33 -t %73 -P -F #{window_id}--#{pane_id}
+        stdout: "@13--%74"
+      - name: tmux
+        args: |
+          splitw -v -p 66 -t %70 -P -F #{window_id}--#{pane_id}
+        stdout: "@13--%75"
+      - name: tmux
+        args: |
+          splitw -v -p 50 -t %75 -P -F #{window_id}--#{pane_id}
+        stdout: "@13--%76"
+  - id: 4
+    ignore: False
+    dimension:
+      width: 274
+      height: 81
+    sessionName: sessionName4
+    error: session with same name, sessionName4, is already present
+    windows:
+      - grid: |
+          vim
+        name: window41
+    commands:
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+        stdout: |
+          sessionName4
+          sessionName5
+          some_random_name_as_well
+  - id: 5
+    ignore: False
+    dimension:
+      width: 274
+      height: 81
+    sessionName: sessionName5
+    error: "err: cannot find the list of the sessions: message in err, stdout: message in std out, stderr: message in std err"
+    windows:
+      - grid: |
+          vim
+        name: window51
+    commands:
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+        stderr: message in std err
+        stdout: message in std out
+        err: message in err
+        exitCode: 1234
+  - id: 6
+    ignore: False
+    dimension:
+      width: 274
+      height: 81
+    sessionName: sessionName6
+    error: "cannot create the session: err: message in err, stdout: , stderr: message in std err"
+    windows:
+      - grid: |
+          vim
+        name: window61
+    commands:
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+      - name: tmux
+        args: |
+          new-session -d -s sessionName6 -n window61 -x 274 -y 81 -P -F #{window_id}--#{pane_id}
+        stderr: message in std err
+        err: message in err
+        exitCode: 1234
+  - id: 7
+    ignore: False
+    dimension:
+      width: 274
+      height: 81
+    sessionName: sessionName7
+    error: "cannot create the session: err: cannot parse the windowID and pane ID from the list-panes output, stdout: invalid_message, stderr: "
+    windows:
+      - grid: |
+          vim
+        name: window71
+    commands:
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+      - name: tmux
+        args: |
+          new-session -d -s sessionName7 -n window71 -x 274 -y 81 -P -F #{window_id}--#{pane_id}
+        stdout: invalid_message
+  - id: 8
+    ignore: False
+    dimension:
+      width: 274
+      height: 81
+    sessionName: sessionName8
+    error: "cannot create the window, window82: err: message in err, stdout: , stderr: message in std err"
+    windows:
+      - grid: |
+          vim
+        name: window81
+      - grid: |
+          vim
+        name: window82
+    commands:
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+      - name: tmux
+        args: |
+          new-session -d -s sessionName8 -n window81 -x 274 -y 81 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%1"
+      - name: tmux
+        args: |
+          new-window -t sessionName8 -n window82 -P -F #{window_id}--#{pane_id}
+        stderr: message in std err
+        err: message in err
+        exitCode: 1234
+  - id: 9
+    ignore: False
+    dimension:
+      width: 274
+      height: 81
+    sessionName: sessionName9
+    error: "cannot create the window, window92: err: cannot parse the windowID and pane ID from the new-window output, stdout: invalid_message, stderr: "
+    windows:
+      - grid: |
+          vim
+        name: window91
+      - grid: |
+          vim
+        name: window92
+    commands:
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+      - name: tmux
+        args: |
+          new-session -d -s sessionName9 -n window91 -x 274 -y 81 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%1"
+      - name: tmux
+        args: |
+          new-window -t sessionName9 -n window92 -P -F #{window_id}--#{pane_id}
+        stdout: invalid_message
+  - id: 10
+    ignore: False
+    dimension:
+      width: 274
+      height: 81
+    sessionName: sessionName10
+    error: "cannot walk the pane: err: cannot parse the windowID and pane ID from the splitw output, stdout: invalid_message, stderr: "
+    windows:
+      - grid: |
+          vim play
+        name: window101
+    commands:
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+      - name: tmux
+        args: |
+          new-session -d -s sessionName10 -n window101 -x 274 -y 81 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%1"
+      - name: tmux
+        args: |
+          splitw -h -p 50 -t %1 -P -F #{window_id}--#{pane_id}
+        stdout: invalid_message
+  - id: 11
+    ignore: False
+    dimension:
+      width: 274
+      height: 81
+    sessionName: sessionName11
+    error: "cannot walk the pane: err: message in err, stdout: , stderr: message in std err"
+    windows:
+      - grid: |
+          vim play
+        name: window111
+    commands:
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+      - name: tmux
+        args: |
+          new-session -d -s sessionName11 -n window111 -x 274 -y 81 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%1"
+      - name: tmux
+        args: |
+          splitw -h -p 50 -t %1 -P -F #{window_id}--#{pane_id}
+        stderr: message in std err
+        err: message in err
+        exitCode: 1234
+  - id: 12
+    ignore: False
+    dimension:
+      width: 274
+      height: 81
+    sessionName: sessionName12
+    windows:
+      - grid: |
+          vim db redis test
+        name: window121
+        commands:
+          - pane: vim
+            workdir: code
+            command: |
+              GO111MODULE=on go get golang.org/x/tools/gopls@latest
+              vim
+          - pane: db
+            workdir: /home/user/cockroachdb/
+            command: |
+              cockroach start --insecure
+          - pane: redis
+            workdir:
+            command: |
+              cd /etc/redis
+              redis-server
+          - pane: test
+            command: |
+              cd code
+              go test ./...
+    commands:
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+      - name: tmux
+        args: |
+          new-session -d -s sessionName12 -n window121 -x 274 -y 81 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%0"
+      - name: tmux
+        args: |
+          splitw -h -p 75 -t %0 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%1"
+      - name: tmux
+        args: |
+          splitw -h -p 66 -t %1 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%2"
+      - name: tmux
+        args: |
+          splitw -h -p 50 -t %2 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%3"
+      - name: tmux
+        args: |
+          send-keys -t %0 cd /home/waterbottle/code/tmuxt/code C-m
+      - name: tmux
+        args: |
+          send-keys -t %0 GO111MODULE=on go get golang.org/x/tools/gopls@latest C-m
+      - name: tmux
+        args: |
+          send-keys -t %0 vim C-m
+      - name: tmux
+        args: |
+          send-keys -t %1 cd /home/user/cockroachdb C-m
+      - name: tmux
+        args: |
+          send-keys -t %1 cockroach start --insecure C-m
+      - name: tmux
+        args: |
+          send-keys -t %2 cd /etc/redis C-m
+      - name: tmux
+        args: |
+          send-keys -t %2 redis-server C-m
+      - name: tmux
+        args: |
+          send-keys -t %3 cd code C-m
+      - name: tmux
+        args: |
+          send-keys -t %3 go test ./... C-m
+  - id: 13
+    ignore: False
+    dimension:
+      width: 274
+      height: 81
+    sessionName: sessionName13
+    error:
+    windows:
+      - grid: |
+          vim
+        name: window131
+        commands:
+          - pane: vim
+            command: |
+              vim
+    commands:
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+      - name: tmux
+        args: |
+          new-session -d -s sessionName13 -n window131 -x 274 -y 81 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%0"
+      - name: tmux
+        args: |
+          send-keys -t %0 vim C-m
+        stderr: msg in std error
+        err: msg in error
+        exitCode: 1234

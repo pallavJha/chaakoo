@@ -1,25 +1,40 @@
-package tmuxt
+package chaakoo
 
 import (
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 	"os"
 	"path/filepath"
 	"testing"
+	"time"
 )
 
 const TestConfigDirName = "test_config"
 
 func TestMain(m *testing.M) {
-	readTestConfig()
+	reconfigureLogger(true)
 	exitCode := m.Run()
 	// clean up activities
 	os.Exit(exitCode)
 
 }
 
-func readTestConfig() {
-	viper.SetConfigName("grids")
+func reconfigureLogger(verboseLog bool) {
+	log.Logger = zerolog.New(&zerolog.ConsoleWriter{
+		Out:        os.Stdout,
+		NoColor:    false,
+		TimeFormat: time.RFC3339,
+	}).With().Timestamp().Caller().Logger()
+	if verboseLog {
+		log.Debug().Msgf("setting global log level to DEBUG as verbose log is enabled")
+		zerolog.SetGlobalLevel(zerolog.DebugLevel)
+	}
+}
+
+func readTestConfig(configName string) {
+	viper.Reset()
+	viper.SetConfigName(configName)
 	viper.SetConfigType("yaml")
 
 	wd, err := os.Getwd()

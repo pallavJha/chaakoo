@@ -1,0 +1,35 @@
+on: [push, pull_request]
+name: Test
+jobs:
+  test:
+    name: Go tests
+    strategy:
+      fail-fast: false
+      matrix:
+        go: [1.16.x]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Install Go ${{ matrix.go }}
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go }}
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+            env
+            sudo apt install make
+            sudo apt install tmux
+            make prepare
+        shell: bash
+      - name: Test
+        run: make test
+      - name: Test Race
+        run: make test-race
+      - name: Vet
+        run: make vet
+      - name: Lint
+        run: make lint
+      - name: Build
+        run: make build
