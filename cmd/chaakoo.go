@@ -13,14 +13,20 @@ import (
 
 var (
 	// Used for flags.
-	cfgFile    string
-	verboseLog bool
-	dryRun     bool
+	cfgFile     string
+	verboseLog  bool
+	dryRun      bool
+	showVersion bool
+	version     string
 
 	rootCmd = &cobra.Command{
 		Use:   "chaakoo",
 		Short: "chaakoo converts the 2D grids or matrix into TMUX windows and panes",
 		Run: func(cmd *cobra.Command, args []string) {
+			if showVersion {
+				log.Info().Msgf("version: %s", version)
+				return
+			}
 			var config *chaakoo.Config
 			if err := viper.Unmarshal(config); err != nil {
 				// TODO: add helpful example for a config
@@ -43,19 +49,22 @@ func Execute() error {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
-
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is CWD/chaakoo.yaml)")
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file (default is CWD/chaakoo.yaml)")
 	if err := rootCmd.MarkPersistentFlagRequired("config"); err != nil {
 		log.Fatal().Err(err).Msg("cannot set the flag config required")
 	}
-	rootCmd.PersistentFlags().BoolVar(&verboseLog, "verbose", false, "pass true to enable verbose logging")
-	rootCmd.PersistentFlags().BoolVar(&verboseLog, "dry-run", false, "if true then commands will not be executed")
+	rootCmd.PersistentFlags().BoolVarP(&verboseLog, "verbose", "v", false, "pass to enable verbose logging")
+	rootCmd.PersistentFlags().BoolVarP(&showVersion, "version", "V", false, "pass to print the version")
+	rootCmd.PersistentFlags().BoolVarP(&dryRun, "dry-run", "d", false, "if true then commands will not be executed")
+
+	cobra.OnInitialize(initConfig)
 }
 
 func initConfig() {
 	reconfigureLogger()
-	readConfig()
+	if showVersion {
+		readConfig()
+	}
 }
 
 func readConfig() {
