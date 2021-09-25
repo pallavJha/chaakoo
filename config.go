@@ -13,6 +13,7 @@ type Config struct {
 	SessionName string    `mapstructure:"name"`
 	Windows     []*Window `mapstructure:"windows"`
 	DryRun      bool
+	ExitOnError bool
 }
 
 func (c *Config) Validate() error {
@@ -46,7 +47,7 @@ type Window struct {
 	Name      string `mapstructure:"name"`
 	Grid      string `mapstructure:"grid"`
 	FirstPane *Pane
-	Commands  map[string]*Command `mapstructure:"commands"`
+	Commands  []*Command `mapstructure:"commands"`
 }
 
 func (w *Window) Validate() error {
@@ -79,6 +80,7 @@ func (w *Window) Parse() error {
 }
 
 type Command struct {
+	Name             string `mapstructure:"pane"`
 	CommandText      string `mapstructure:"command"`
-	WorkingDirectory string `mapstructure:"working_dir"`
+	WorkingDirectory string `mapstructure:"workdir"`
 }

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/rs/zerolog/log"
 	"os/exec"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -70,6 +71,9 @@ func (t *TmuxWrapper) Apply() error {
 	if err = t.walkPane(t.config.Windows[0].FirstPane, paneNames); err != nil {
 		return fmt.Errorf("cannot walk the pane: %w", err)
 	}
+	if err = t.handleRunCommands(t.config.Windows[0], paneNames); err != nil {
+		return err
+	}
 	for i := 1; i < len(t.config.Windows); i++ {
 		res, err = t.newWindow(t.config.SessionName, t.config.Windows[i].Name)
 		if err != nil {
@@ -79,6 +83,54 @@ func (t *TmuxWrapper) Apply() error {
 		paneNames[t.config.Windows[i].FirstPane.Name] = res.PaneID
 		if err = t.walkPane(t.config.Windows[i].FirstPane, paneNames); err != nil {
 			return err
+		}
+		if err = t.handleRunCommands(t.config.Windows[i], paneNames); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (t *TmuxWrapper) handleRunCommands(window *Window, paneNames map[string]string) error {
+	if err := t.runCommands(window, paneNames); err != nil {
+		if t.config.ExitOnError {
+			log.Error().Err(err).Msgf("error while executing the commands for windows %s", window.Name)
+			return fmt.Errorf("error while executing the commands for windows %s: %w", window.Name, err)
+		} else {
+			log.Debug().Err(err).Msgf("error while executing the commands for windows %s", window.Name)
+		}
+	}
+	return nil
+}
+
+func (t *TmuxWrapper) runCommands(window *Window, paneNames map[string]string) error {
+	for _, command := range window.Commands {
+		paneID, ok := paneNames[command.Name]
+		if !ok {
+			continue
+		}
+		wd := strings.TrimSpace(command.WorkingDirectory)
+		if len(wd) > 0 {
+			absPath, err := filepath.Abs(wd)
+			if err != nil {
+				return fmt.Errorf("cannot find the abs path for pane %s: %w", command.Name, err)
+			}
+			if err = t.sendKeys(paneID, command.Name, []string{"cd", absPath}); err != nil {
+				return err
+			}
+		}
+		if len(command.CommandText) > 0 {
+			commandText := strings.TrimSpace(command.CommandText)
+			commands := strings.Split(commandText, "\n")
+			for _, commandText := range commands {
+				commandText = strings.TrimSpace(commandText)
+				if len(commandText) == 0 {
+					continue
+				}
+				if err := t.sendKeys(paneID, command.Name, strings.Fields(commandText)); err != nil {
+					return fmt.Errorf("cannot execute the commands for pane %s: %w", command.Name, err)
+				}
+			}
 		}
 	}
 	return nil
@@ -296,6 +348,26 @@ func (t TmuxWrapper) hasSession(sessionName string) (bool, error) {
 		}
 	}
 	return false, nil
+}
+
+func (t TmuxWrapper) sendKeys(targetPaneID, paneName string, actions []string) error {
+	// tmux send-keys -t %23 commands... C-m
+	var args = []string{
+		"send-keys",
+		"-t",
+		targetPaneID,
+	}
+	args = append(args, fmt.Sprintf("%s", strings.Join(actions, " ")))
+	// append the C-m for Enter key
+	args = append(args, "C-m")
+	stdout, stderr, _, err := t.executor.Execute(CommandName, args...)
+	if err != nil {
+		log.Error().Err(err).Str("stdout", stdout).
+			Str("stderr", stderr).
+			Str("pane", paneName).Msg("error while send-keys")
+		return NewTmuxError(stdout, stderr, fmt.Errorf("error while send-keys for pane, %s, : %w", paneName, err))
+	}
+	return nil
 }
 
 type ICommandExecutor interface {

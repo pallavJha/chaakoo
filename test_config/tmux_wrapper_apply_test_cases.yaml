@@ -1,6 +1,6 @@
 configs:
   - id: 1
-    ignore: False
+    ignore: True
     dimension:
       width: 274
       height: 81
@@ -67,7 +67,7 @@ configs:
           splitw -h -p 50 -t %8 -P -F #{window_id}--#{pane_id}
         stdout: "@3--%9"
   - id: 2
-    ignore: False
+    ignore: True
     dimension:
       width: 274
       height: 81
@@ -163,7 +163,7 @@ configs:
           splitw -v -p 50 -t %22 -P -F #{window_id}--#{pane_id}
         stdout: "@7--%25"
   - id: 3
-    ignore: False
+    ignore: True
     dimension:
       width: 274
       height: 81
@@ -415,7 +415,7 @@ configs:
           splitw -v -p 50 -t %75 -P -F #{window_id}--#{pane_id}
         stdout: "@13--%76"
   - id: 4
-    ignore: False
+    ignore: True
     dimension:
       width: 274
       height: 81
@@ -434,7 +434,7 @@ configs:
           sessionName5
           some_random_name_as_well
   - id: 5
-    ignore: False
+    ignore: True
     dimension:
       width: 274
       height: 81
@@ -453,7 +453,7 @@ configs:
         err: message in err
         exitCode: 1234
   - id: 6
-    ignore: False
+    ignore: True
     dimension:
       width: 274
       height: 81
@@ -474,7 +474,7 @@ configs:
         err: message in err
         exitCode: 1234
   - id: 7
-    ignore: False
+    ignore: True
     dimension:
       width: 274
       height: 81
@@ -493,7 +493,7 @@ configs:
           new-session -d -s sessionName7 -n window71 -x 274 -y 81 -P -F #{window_id}--#{pane_id}
         stdout: invalid_message
   - id: 8
-    ignore: False
+    ignore: True
     dimension:
       width: 274
       height: 81
@@ -521,7 +521,7 @@ configs:
         err: message in err
         exitCode: 1234
   - id: 9
-    ignore: False
+    ignore: True
     dimension:
       width: 274
       height: 81
@@ -547,7 +547,7 @@ configs:
           new-window -t sessionName9 -n window92 -P -F #{window_id}--#{pane_id}
         stdout: invalid_message
   - id: 10
-    ignore: False
+    ignore: True
     dimension:
       width: 274
       height: 81
@@ -570,7 +570,7 @@ configs:
           splitw -h -p 50 -t %1 -P -F #{window_id}--#{pane_id}
         stdout: invalid_message
   - id: 11
-    ignore: False
+    ignore: True
     dimension:
       width: 274
       height: 81
@@ -594,3 +594,79 @@ configs:
         stderr: message in std err
         err: message in err
         exitCode: 1234
+  - id: 12
+    ignore: False
+    dimension:
+      width: 274
+      height: 81
+    sessionName: sessionName12
+    windows:
+      - grid: |
+          vim db redis test
+        name: window121
+        commands:
+          - pane: vim
+            workdir: code
+            command: |
+              GO111MODULE=on go get golang.org/x/tools/gopls@latest
+              vim
+          - pane: db
+            workdir: /home/user/cockroachdb/
+            command: |
+              cockroach start --insecure
+          - pane: redis
+            workdir:
+            command: |
+              cd /etc/redis
+              redis-server
+          - pane: test
+            command: |
+              cd code
+              go test ./...
+    commands:
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+      - name: tmux
+        args: |
+          new-session -d -s sessionName12 -n window121 -x 274 -y 81 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%0"
+      - name: tmux
+        args: |
+          splitw -h -p 75 -t %0 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%1"
+      - name: tmux
+        args: |
+          splitw -h -p 66 -t %1 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%2"
+      - name: tmux
+        args: |
+          splitw -h -p 50 -t %2 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%3"
+      - name: tmux
+        args: |
+          send-keys -t %0 cd /home/waterbottle/code/tmuxt/code C-m
+      - name: tmux
+        args: |
+          send-keys -t %0 GO111MODULE=on go get golang.org/x/tools/gopls@latest C-m
+      - name: tmux
+        args: |
+          send-keys -t %0 vim C-m
+      - name: tmux
+        args: |
+          send-keys -t %1 cd /home/user/cockroachdb C-m
+      - name: tmux
+        args: |
+          send-keys -t %1 cockroach start --insecure C-m
+      - name: tmux
+        args: |
+          send-keys -t %2 cd /etc/redis C-m
+      - name: tmux
+        args: |
+          send-keys -t %2 redis-server C-m
+      - name: tmux
+        args: |
+          send-keys -t %3 cd code C-m
+      - name: tmux
+        args: |
+          send-keys -t %3 go test ./... C-m
