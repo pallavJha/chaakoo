@@ -7,6 +7,7 @@
 3. [Using Chaakoo](#using-chaakoo)
 4. [Examples](#examples)
 5. [Download](#download)
+6. [License](#license)
 
 ## Introduction
 Chaakoo is a wrapper over TMUX that can create sessions, windows and panes from a grid based layout. 
@@ -129,3 +130,17 @@ There are more examples present in the [examples](./examples) directory with con
 The latest binary can be downloaded from the [latest GitHub release](https://github.com/pallavJha/chaakoo/releases/latest).
 The binaries are statically linked.
 
+## License
+   Copyright 2021 Pallav Jha
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
