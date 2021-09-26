@@ -7,45 +7,16 @@ Chaakoo is a wrapper over TMUX that can create sessions, windows and panes from 
 
 For example,
 
-<table>
-<tbody>
-<tr>
-    <td>
-        <pre>
-vim  vim  vim  term
-vim  vim  vim  term
-play play play play    
-        </pre>
-    </td>
-    <td> → </td>
-    <td>
-        ![Image link to the first example](examples/1/1-window1.png)
-    </td>
-</tr>
-</tbody>
-</table>
+
+| Config             |  Generated Panes |
+:-------------------------:|:-------------------------:
+<pre>vim&nbsp;&nbsp;vim&nbsp;&nbsp;vim&nbsp;&nbsp;term<br/>vim&nbsp;&nbsp;vim&nbsp;&nbsp;vim&nbsp;&nbsp;term<br/>play&nbsp;play&nbsp;play&nbsp;play</pre>  |  ![](examples/1/1-window1.png)
 
 The layout can be a little complex as well based on further pane divisions, like,
 
-<table>
-<tbody>
-<tr>
-    <td>
-        <pre>
-arandr  arandr  bzip    cat
-vim     vim     err     cat
-vim     vim     file    file
-grafana grafana grafana grafana
-grafana grafana grafana grafana   
-        </pre>
-    </td>
-    <td> → </td>
-    <td>
-        ![Image link to the first example](examples/2/2-window1.png)
-    </td>
-</tr>
-</tbody>
-</table>
+| Config             |  Generated Panes |
+:-------------------------:|:-------------------------:
+<pre>arandr&nbsp;&nbsp;arandr&nbsp;&nbsp;bzip&nbsp;&nbsp;&nbsp;&nbsp;cat<br/>vim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;err&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cat<br/>vim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file&nbsp;&nbsp;&nbsp;&nbsp;file<br/>grafana&nbsp;grafana&nbsp;grafana&nbsp;grafana<br/>grafana&nbsp;grafana&nbsp;grafana&nbsp;grafana<br/></pre>  |  ![](examples/2/2-window1.png)
 
 ## Configuration
 
