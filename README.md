@@ -5,7 +5,7 @@
 ## Introduction
 Chaakoo is a wrapper over TMUX that can create sessions, windows and panes from a grid based layout. 
 
-For example,
+For example, this grid:
 
 ```
 vim  vim  vim  term
@@ -13,10 +13,11 @@ vim  vim  vim  term
 play play play play
 ```
 
-the above grid will create the following layout:
+will create the following layout:
+
 ![window1](./examples/1/1-window1.png)
 
-The layout can be a little complex as well based on further pane divisions, like,
+The layout can be a little complex too based on the further pane divisions, like,
 
 ```
 arandr  arandr  bzip    cat
@@ -64,7 +65,7 @@ windows:
     - `command` - Can contain multi line text for the commands
     - `workdir` - Pane's first directory. It can further be changed by `cd` present in `command`
 
-The `commands` section or commands for a pane are not a required field. Chaakoo can just be used to create the pane 
+**Note**: The `commands` section or commands for a pane are not a required field. Chaakoo can just be used to create the pane 
 layout and then the user can take over and execute their commands.
 
 ## Using Chaakoo

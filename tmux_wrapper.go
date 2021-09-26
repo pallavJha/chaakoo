@@ -148,6 +148,22 @@ func (t *TmuxWrapper) runCommands(window *Window, paneNames map[string]string) e
 	return nil
 }
 
+// walkPane decides whether to create the left pane or the bottom pane from the current pane
+// It is decided based on the height and width of the child panes.
+// If the left pane's height is same as the current pane then the left pane is created.
+//	-----------
+//	|    |    |
+//	|----|    |
+//	|    |    |
+//	-----------
+// Here the left pane will be created before the bottom pane.
+// However, in this(V) case:
+//	-----------
+//	|    |    |
+//	|----|----|
+//	|         |
+//	-----------
+// the bottom pane will be created first and then the left pane will be created from the remaining area
 func (t *TmuxWrapper) walkPane(currentPane *Pane, paneNames map[string]string) error {
 	currentPane.reset()
 	for {
