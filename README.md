@@ -10,7 +10,7 @@
 6. [License](#license)
 
 ## Introduction
-Chaakoo is a wrapper over TMUX that can create sessions, windows and panes from a grid based layout. 
+Chaakoo is a wrapper over TMUX that can create sessions, windows and panes from a grid based layout. The idea here is inspired by the [CSS grid template areas](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas).
 
 For example, this grid:
 
