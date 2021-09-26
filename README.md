@@ -2,6 +2,12 @@
 
 [![Test](https://github.com/pallavJha/chaakoo/actions/workflows/test.yaml/badge.svg)](https://github.com/pallavJha/chaakoo/actions/workflows/test.yaml)
 
+1. [Introduction](#introduction)
+2. [Configuration](#configuration)
+3. [Using Chaakoo](#using-chaakoo)
+4. [Examples](#examples)
+5. [Download](#download)
+
 ## Introduction
 Chaakoo is a wrapper over TMUX that can create sessions, windows and panes from a grid based layout. 
 
@@ -116,5 +122,10 @@ Flags:
   -w, --width int       terminal dimension for cols or width
 ```
 
+## Examples
 There are more examples present in the [examples](./examples) directory with configurations and snapshots.
+
+## Download
+The latest binary can be downloaded from the [latest GitHub release](https://github.com/pallavJha/chaakoo/releases/latest).
+The binaries are statically linked.
 
