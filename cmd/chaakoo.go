@@ -18,6 +18,9 @@ var (
 	dryRun      bool
 	showVersion bool
 	version     string
+	exitOnError bool
+	height      int
+	width       int
 
 	rootCmd = &cobra.Command{
 		Use:   "chaakoo",
@@ -27,8 +30,8 @@ var (
 				log.Info().Msgf("version: %s", version)
 				return
 			}
-			var config *chaakoo.Config
-			if err := viper.Unmarshal(config); err != nil {
+			var config chaakoo.Config
+			if err := viper.Unmarshal(&config); err != nil {
 				// TODO: add helpful example for a config
 				log.Fatal().Err(err).Msg("cannot unmarshal the config")
 			}
@@ -39,6 +42,29 @@ var (
 				log.Fatal().Err(err).Msg("cannot parse the grid for a window")
 			}
 			config.DryRun = dryRun
+			config.ExitOnError = exitOnError
+
+			var err error
+			var dimension *chaakoo.Dimension
+			if height == 0 || width == 0 {
+				log.Debug().Msg("finding the dimensions")
+				dimUsingTerm := &chaakoo.DimensionUsingTerm{}
+				dimension, err = dimUsingTerm.Dimension()
+				if err != nil {
+					log.Fatal().Err(err).Msg("cannot find the terminal dimensions")
+				}
+				log.Debug().Int("width", dimension.Width).Int("height", dimension.Height).Msg("found dimensions")
+			} else {
+				dimension = chaakoo.NewDimension(width, height)
+			}
+
+			wrapper := chaakoo.NewTmuxWrapper(&config, dimension)
+			err = wrapper.Apply()
+			if err != nil {
+				log.Fatal().Err(err).Msg("error while applying the config")
+			}
+			log.Info().Msg("session created successfully, it can be attached by executing:")
+			log.Info().Msgf("tmux a -t %s", config.SessionName)
 		},
 	}
 )
@@ -49,20 +75,20 @@ func Execute() error {
 }
 
 func init() {
-	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file (default is CWD/chaakoo.yaml)")
-	if err := rootCmd.MarkPersistentFlagRequired("config"); err != nil {
-		log.Fatal().Err(err).Msg("cannot set the flag config required")
-	}
-	rootCmd.PersistentFlags().BoolVarP(&verboseLog, "verbose", "v", false, "pass to enable verbose logging")
-	rootCmd.PersistentFlags().BoolVarP(&showVersion, "version", "V", false, "pass to print the version")
-	rootCmd.PersistentFlags().BoolVarP(&dryRun, "dry-run", "d", false, "if true then commands will not be executed")
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file (default is ./chaakoo.yaml)")
+	rootCmd.PersistentFlags().BoolVarP(&verboseLog, "verbose", "v", false, "enable verbose logging")
+	rootCmd.PersistentFlags().BoolVarP(&showVersion, "version", "V", false, "print the version")
+	rootCmd.PersistentFlags().BoolVarP(&dryRun, "dry-run", "d", false, "if true then commands will only be shown and not executed")
+	rootCmd.PersistentFlags().BoolVarP(&exitOnError, "exit-on-error", "e", false, "if true then chaakoo will exit after it encounters the first error during command execution")
+	rootCmd.PersistentFlags().IntVarP(&height, "height", "r", 0, "terminal dimension for rows or height, if 0 then rows and cols will be found internally")
+	rootCmd.PersistentFlags().IntVarP(&width, "width", "w", 0, "terminal dimension for cols or width")
 
 	cobra.OnInitialize(initConfig)
 }
 
 func initConfig() {
 	reconfigureLogger()
-	if showVersion {
+	if !showVersion {
 		readConfig()
 	}
 }
@@ -89,13 +115,19 @@ func readConfig() {
 }
 
 func reconfigureLogger() {
+	timeFormat := time.Kitchen
+	if verboseLog {
+		timeFormat = time.RFC3339
+	}
 	log.Logger = zerolog.New(&zerolog.ConsoleWriter{
 		Out:        os.Stdout,
 		NoColor:    false,
-		TimeFormat: time.RFC3339,
+		TimeFormat: timeFormat,
 	}).With().Timestamp().Caller().Logger()
 	if verboseLog {
 		log.Debug().Msgf("setting global log level to DEBUG as verbose log is enabled")
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
+	} else {
+		zerolog.SetGlobalLevel(zerolog.InfoLevel)
 	}
 }

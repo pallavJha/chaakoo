@@ -347,6 +347,9 @@ func (t TmuxWrapper) hasSession(sessionName string) (bool, error) {
 		log.Error().Err(err).Str("stdout", stdout).
 			Str("stderr", stderr).
 			Str("sessionName", sessionName).Msg("unable to get the list of the present sessions")
+		if strings.Contains(stderr, "error connecting to") {
+			log.Info().Msg("is tmux server running? It can be started by executing -> $ tmux start-server.")
+		}
 		if !strings.Contains(stderr, "no server running on") {
 			return false, NewTmuxError(stdout, stderr, fmt.Errorf("cannot find the list of the sessions: %w", err))
 		}

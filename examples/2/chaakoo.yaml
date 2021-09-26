@@ -1,0 +1,135 @@
+name: code-environment
+windows:
+  - grid: |
+      arandr  arandr  bzip    cat
+      vim     vim     err     cat
+      vim     vim     file    file
+      grafana grafana grafana grafana
+      grafana grafana grafana grafana
+    name: window1
+    commands:
+      - pane: arandr
+        command: |
+          cowsay arandr
+      - pane: bzip
+        command: |
+          cowsay bzip
+      - pane: err
+        command: |
+          cowsay err
+      - pane: cat
+        command: |
+          cowsay cat
+      - pane: vim
+        command: |
+          cowsay vim
+      - pane: file
+        command: |
+          cowsay file
+      - pane: grafana
+        command: |
+          cowsay grafana
+  - grid: |
+      build   build   build   bzip  bzip bzip cat
+      dd      dd      egrep   egrep find find locate
+      grafana grafana grafana htop  htop htop ip
+      grafana grafana grafana htop  htop htop jobs
+    name: window2
+    commands:
+      - pane: build
+        command: |
+          cowsay build
+      - pane: bzip
+        command: |
+          cowsay bzip
+      - pane: cat
+        command: |
+          cowsay cat
+      - pane: dd
+        command: |
+          cowsay dd
+      - pane: egrep
+        command: |
+          cowsay egrep
+      - pane: find
+        command: |
+          cowsay find
+      - pane: locate
+        command: |
+          cowsay locate
+      - pane: grafana
+        command: |
+          cowsay grafana
+      - pane: ip
+        command: |
+          cowsay ip
+      - pane: htop
+        command: |
+          cowsay htop
+      - pane: jobs
+        command: |
+          cowsay jobs
+  - grid: |
+      term    build   cat
+      grafana grafana df
+      grafana grafana egrep
+      grafana grafana find
+    name: window2
+    commands:
+      - pane: term
+        command: |
+          cowsay term
+      - pane: build
+        command: |
+          cowsay build
+      - pane: cat
+        command: |
+          cowsay cat
+      - pane: grafana
+        command: |
+          cowsay grafana
+      - pane: df
+        command: |
+          cowsay df
+      - pane: egrep
+        command: |
+          cowsay egrep
+      - pane: find
+        command: |
+          cowsay find
+  - grid: |
+      arandr bzip  cat  htop
+      find   egrep dd   htop
+      grep   i3    jobs htop
+    name: window2
+    commands:
+      - pane: arandr
+        command: |
+          cowsay arandr
+      - pane: bzip
+        command: |
+          cowsay bzip
+      - pane: cat
+        command: |
+          cowsay cat
+      - pane: htop
+        command: |
+          cowsay htop
+      - pane: find
+        command: |
+          cowsay find
+      - pane: egrep
+        command: |
+          cowsay egrep
+      - pane: dd
+        command: |
+          cowsay dd
+      - pane: jobs
+        command: |
+          cowsay jobs
+      - pane: i3
+        command: |
+          cowsay i3
+      - pane: grep
+        command: |
+          cowsay grep

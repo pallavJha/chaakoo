@@ -19,4 +19,4 @@ prepare:
 
 build:
 	$(eval version=$(shell git describe --tags --always  --abbrev=5))
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags='-extldflags=-static -w -s -X cmd.version=$(version)' -o "chaakoo-$(version)-linux-amd64" cmd/cli/main.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags='-extldflags=-static -w -s -X github.com/pallavJha/chaakoo/cmd.version=$(version)' -o "chaakoo-$(version)-linux-amd64" cmd/cli/main.go
