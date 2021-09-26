@@ -5,7 +5,6 @@ test:
 test-race:
 	go test -race -coverprofile=coverage.txt -covermode=atomic
 
-
 lint:
 	golint
 vet:
@@ -19,4 +18,5 @@ prepare:
 	go install golang.org/x/lint/golint@latest
 
 build:
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o "chaakoo-$(git describe --tags --always)-linux-amd64" cmd/cli/main.go
+	$(eval version=$(shell git describe --tags --always  --abbrev=5))
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags='-extldflags=-static -w -s -X github.com/pallavJha/chaakoo/cmd.version=$(version)' -o "chaakoo-$(version)-linux-amd64" cmd/cli/main.go

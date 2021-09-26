@@ -148,6 +148,22 @@ func (t *TmuxWrapper) runCommands(window *Window, paneNames map[string]string) e
 	return nil
 }
 
+// walkPane decides whether to create the left pane or the bottom pane from the current pane
+// It is decided based on the height and width of the child panes.
+// If the left pane's height is same as the current pane then the left pane is created.
+//	-----------
+//	|    |    |
+//	|----|    |
+//	|    |    |
+//	-----------
+// Here the left pane will be created before the bottom pane.
+// However, in this(V) case:
+//	-----------
+//	|    |    |
+//	|----|----|
+//	|         |
+//	-----------
+// the bottom pane will be created first and then the left pane will be created from the remaining area
 func (t *TmuxWrapper) walkPane(currentPane *Pane, paneNames map[string]string) error {
 	currentPane.reset()
 	for {
@@ -347,6 +363,9 @@ func (t TmuxWrapper) hasSession(sessionName string) (bool, error) {
 		log.Error().Err(err).Str("stdout", stdout).
 			Str("stderr", stderr).
 			Str("sessionName", sessionName).Msg("unable to get the list of the present sessions")
+		if strings.Contains(stderr, "error connecting to") {
+			log.Info().Msg("is tmux server running? It can be started by executing -> $ tmux start-server.")
+		}
 		if !strings.Contains(stderr, "no server running on") {
 			return false, NewTmuxError(stdout, stderr, fmt.Errorf("cannot find the list of the sessions: %w", err))
 		}
