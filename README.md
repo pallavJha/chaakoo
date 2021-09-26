@@ -10,13 +10,13 @@ For example,
 
 | Config             |  Generated Panes |
 :-------------------------:|:-------------------------:
-<pre>vim&nbsp;&nbsp;vim&nbsp;&nbsp;vim&nbsp;&nbsp;term<br/>vim&nbsp;&nbsp;vim&nbsp;&nbsp;vim&nbsp;&nbsp;term<br/>play&nbsp;play&nbsp;play&nbsp;play</pre>  |  ![](./examples/1/1-window1.png)
+<pre>vim&nbsp;&nbsp;vim&nbsp;&nbsp;vim&nbsp;&nbsp;term<br/>vim&nbsp;&nbsp;vim&nbsp;&nbsp;vim&nbsp;&nbsp;term<br/>play&nbsp;play&nbsp;play&nbsp;play</pre>  |  ![window1](./examples/1/1-window1.png)
 
 The layout can be a little complex as well based on further pane divisions, like,
 
 | Config             |  Generated Panes |
 :-------------------------:|:-------------------------:
-<pre>arandr&nbsp;&nbsp;arandr&nbsp;&nbsp;bzip&nbsp;&nbsp;&nbsp;&nbsp;cat<br/>vim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;err&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cat<br/>vim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file&nbsp;&nbsp;&nbsp;&nbsp;file<br/>grafana&nbsp;grafana&nbsp;grafana&nbsp;grafana<br/>grafana&nbsp;grafana&nbsp;grafana&nbsp;grafana<br/></pre>  |  ![](./examples/2/2-window1.png)
+<pre>arandr&nbsp;&nbsp;arandr&nbsp;&nbsp;bzip&nbsp;&nbsp;&nbsp;&nbsp;cat<br/>vim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;err&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cat<br/>vim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file&nbsp;&nbsp;&nbsp;&nbsp;file<br/>grafana&nbsp;grafana&nbsp;grafana&nbsp;grafana<br/>grafana&nbsp;grafana&nbsp;grafana&nbsp;grafana<br/></pre>  |  ![window2](./examples/2/2-window1.png)
 
 ## Configuration
 
