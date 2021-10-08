@@ -17,8 +17,8 @@ jobs:
         run: |
           version=$(git describe --tags --always  --abbrev=5)
           CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-extldflags=-static -w -s -X github.com/pallavJha/chaakoo/cmd.version=$version" -o "chaakoo-$version-linux-amd64" cmd/chaakoo/main.go
-          CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -trimpath -ldflags="-extldflags=-static -w -s -X github.com/pallavJha/chaakoo/cmd.version=$version" -o "chaakoo-$version-linux-arm64" cmd/chakoo/main.go
-          CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -trimpath -ldflags="-extldflags=-static -w -s -X github.com/pallavJha/chaakoo/cmd.version=$version" -o "chaakoo-$version-darwin-amd64" cmd/chakoo/main.go
+          CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -trimpath -ldflags="-extldflags=-static -w -s -X github.com/pallavJha/chaakoo/cmd.version=$version" -o "chaakoo-$version-linux-arm64" cmd/chaakoo/main.go
+          CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -trimpath -ldflags="-extldflags=-static -w -s -X github.com/pallavJha/chaakoo/cmd.version=$version" -o "chaakoo-$version-darwin-amd64" cmd/chaakoo/main.go
           CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -trimpath -ldflags="-extldflags=-static -w -s -X github.com/pallavJha/chaakoo/cmd.version=$version" -o "chaakoo-$version-windows-amd64" cmd/chaakoo/main.go
       - name: Upload release artifacts
         uses: actions/github-script@v3
