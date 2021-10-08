@@ -130,6 +130,13 @@ There are more examples present in the [examples](./examples) directory with con
 The latest binary can be downloaded from the [latest GitHub release](https://github.com/pallavJha/chaakoo/releases/latest).
 The binaries are statically linked.
 
+Or 
+
+```bash
+$ go install github.com/pallavJha/chaakoo/cmd/chaakoo@v0.0.4
+```
+
+
 ## License
    Copyright 2021 Pallav Jha
 
