@@ -124,7 +124,7 @@ Flags:
 ```
 
 ## Examples
-There are more examples present in the [examples](./examples) directory with configurations and snapshots.
+There are more examples present in the [examples](./examples/2) directory with configurations and snapshots.
 
 ## Download
 The latest binary can be downloaded from the [latest GitHub release](https://github.com/pallavJha/chaakoo/releases/latest).
