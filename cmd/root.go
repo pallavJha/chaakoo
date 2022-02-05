@@ -21,6 +21,8 @@ var (
 	exitOnError bool
 	height      int
 	width       int
+  save        bool
+
 
 	rootCmd = &cobra.Command{
 		Use:   "chaakoo",
@@ -82,6 +84,7 @@ func init() {
 	rootCmd.PersistentFlags().BoolVarP(&exitOnError, "exit-on-error", "e", false, "if true then chaakoo will exit after it encounters the first error during command execution")
 	rootCmd.PersistentFlags().IntVarP(&height, "height", "r", 0, "terminal dimension for rows or height, if 0 then rows and cols will be found internally")
 	rootCmd.PersistentFlags().IntVarP(&width, "width", "w", 0, "terminal dimension for cols or width")
+	rootCmd.PersistentFlags().BoolVarP(&save, "save", "s", false, "pass true to save the configuration with the session name")
 
 	cobra.OnInitialize(initConfig)
 }
