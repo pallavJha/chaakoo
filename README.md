@@ -133,7 +133,7 @@ The binaries are statically linked.
 Or 
 
 ```bash
-$ go install github.com/pallavJha/chaakoo/cmd/chaakoo@v0.0.4
+$ go install github.com/pallavJha/chaakoo/cmd/chaakoo@v0.0.5
 ```
 
 
