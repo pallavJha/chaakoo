@@ -300,14 +300,14 @@ func (t *TmuxWrapper) newWindow(sessionName, windowName string) (*TmuxCmdRespons
 }
 
 func (t *TmuxWrapper) newPane(targetPaneID string, sizeInPercentage int, horizontalSplit bool) (*TmuxCmdResponse, error) {
-	// tmux splitw -h -p 10 -t 0 -P -F "#{pane_id}"
+	// tmux splitw -h -l 10% -t 0 -P -F "#{pane_id}"
 	// %10
 
 	var args = []string{
 		"splitw",
 		"-h",
-		"-p",
-		strconv.Itoa(sizeInPercentage),
+		"-l",
+		strconv.Itoa(sizeInPercentage) + "%",
 		"-t",
 		targetPaneID,
 		"-P",
