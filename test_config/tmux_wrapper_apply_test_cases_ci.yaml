@@ -32,11 +32,11 @@ configs:
         stdout: "@0--%0"
       - name: tmux
         args: |
-          splitw -v -p 33 -t %0 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 33% -t %0 -P -F #{window_id}--#{pane_id}
         stdout: "@0--%1"
       - name: tmux
         args: |
-          splitw -h -p 25 -t %0 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 25% -t %0 -P -F #{window_id}--#{pane_id}
         stdout: "@0--%2"
       - name: tmux
         args: |
@@ -44,11 +44,11 @@ configs:
         stdout: "@1--%3"
       - name: tmux
         args: |
-          splitw -h -p 66 -t %3 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 66% -t %3 -P -F #{window_id}--#{pane_id}
         stdout: "@1--%4"
       - name: tmux
         args: |
-          splitw -h -p 50 -t %4 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 50% -t %4 -P -F #{window_id}--#{pane_id}
         stdout: "@1--%5"
       - name: tmux
         args: |
@@ -60,11 +60,11 @@ configs:
         stdout: "@3--%7"
       - name: tmux
         args: |
-          splitw -h -p 66 -t %7 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 66% -t %7 -P -F #{window_id}--#{pane_id}
         stdout: "@3--%8"
       - name: tmux
         args: |
-          splitw -h -p 50 -t %8 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 50% -t %8 -P -F #{window_id}--#{pane_id}
         stdout: "@3--%9"
   - id: 2
     ignore: False
@@ -104,11 +104,11 @@ configs:
         stdout: "@4--%10"
       - name: tmux
         args: |
-          splitw -v -p 33 -t %10 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 33% -t %10 -P -F #{window_id}--#{pane_id}
         stdout: "@4--%11"
       - name: tmux
         args: |
-          splitw -h -p 50 -t %11 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 50% -t %11 -P -F #{window_id}--#{pane_id}
         stdout: "@4--%12"
       - name: tmux
         args: |
@@ -116,7 +116,7 @@ configs:
         stdout: "@5--%13"
       - name: tmux
         args: |
-          splitw -v -p 33 -t %13 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 33% -t %13 -P -F #{window_id}--#{pane_id}
         stdout: "@5--%14"
       - name: tmux
         args: |
@@ -124,27 +124,27 @@ configs:
         stdout: "@6--%15"
       - name: tmux
         args: |
-          splitw -h -p 33 -t %15 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 33% -t %15 -P -F #{window_id}--#{pane_id}
         stdout: "@6--%16"
       - name: tmux
         args: |
-          splitw -v -p 75 -t %16 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 75% -t %16 -P -F #{window_id}--#{pane_id}
         stdout: "@6--%17"
       - name: tmux
         args: |
-          splitw -v -p 66 -t %17 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 66% -t %17 -P -F #{window_id}--#{pane_id}
         stdout: "@6--%18"
       - name: tmux
         args: |
-          splitw -v -p 50 -t %18 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 50% -t %18 -P -F #{window_id}--#{pane_id}
         stdout: "@6--%19"
       - name: tmux
         args: |
-          splitw -v -p 75 -t %15 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 75% -t %15 -P -F #{window_id}--#{pane_id}
         stdout: "@6--%20"
       - name: tmux
         args: |
-          splitw -h -p 50 -t %15 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 50% -t %15 -P -F #{window_id}--#{pane_id}
         stdout: "@6--%21"
       - name: tmux
         args: |
@@ -152,15 +152,15 @@ configs:
         stdout: "@7--%22"
       - name: tmux
         args: |
-          splitw -v -p 33 -t %22 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 33% -t %22 -P -F #{window_id}--#{pane_id}
         stdout: "@7--%23"
       - name: tmux
         args: |
-          splitw -h -p 50 -t %22 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 50% -t %22 -P -F #{window_id}--#{pane_id}
         stdout: "@7--%24"
       - name: tmux
         args: |
-          splitw -v -p 50 -t %22 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 50% -t %22 -P -F #{window_id}--#{pane_id}
         stdout: "@7--%25"
   - id: 3
     ignore: False
@@ -216,27 +216,27 @@ configs:
         stdout: "@8--%26"
       - name: tmux
         args: |
-          splitw -v -p 40 -t %26 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 40% -t %26 -P -F #{window_id}--#{pane_id}
         stdout: "@8--%27"
       - name: tmux
         args: |
-          splitw -h -p 50 -t %26 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 50% -t %26 -P -F #{window_id}--#{pane_id}
         stdout: "@8--%28"
       - name: tmux
         args: |
-          splitw -v -p 33 -t %28 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 33% -t %28 -P -F #{window_id}--#{pane_id}
         stdout: "@8--%29"
       - name: tmux
         args: |
-          splitw -h -p 50 -t %28 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 50% -t %28 -P -F #{window_id}--#{pane_id}
         stdout: "@8--%30"
       - name: tmux
         args: |
-          splitw -v -p 50 -t %28 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 50% -t %28 -P -F #{window_id}--#{pane_id}
         stdout: "@8--%31"
       - name: tmux
         args: |
-          splitw -v -p 66 -t %26 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 66% -t %26 -P -F #{window_id}--#{pane_id}
         stdout: "@8--%32"
       - name: tmux
         args: |
@@ -244,43 +244,43 @@ configs:
         stdout: "@9--%33"
       - name: tmux
         args: |
-          splitw -h -p 14 -t %33 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 14% -t %33 -P -F #{window_id}--#{pane_id}
         stdout: "@9--%34"
       - name: tmux
         args: |
-          splitw -v -p 75 -t %34 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 75% -t %34 -P -F #{window_id}--#{pane_id}
         stdout: "@9--%35"
       - name: tmux
         args: |
-          splitw -v -p 66 -t %35 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 66% -t %35 -P -F #{window_id}--#{pane_id}
         stdout: "@9--%36"
       - name: tmux
         args: |
-          splitw -v -p 50 -t %36 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 50% -t %36 -P -F #{window_id}--#{pane_id}
         stdout: "@9--%37"
       - name: tmux
         args: |
-          splitw -v -p 75 -t %33 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 75% -t %33 -P -F #{window_id}--#{pane_id}
         stdout: "@9--%38"
       - name: tmux
         args: |
-          splitw -v -p 66 -t %38 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 66% -t %38 -P -F #{window_id}--#{pane_id}
         stdout: "@9--%39"
       - name: tmux
         args: |
-          splitw -h -p 50 -t %39 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 50% -t %39 -P -F #{window_id}--#{pane_id}
         stdout: "@9--%40"
       - name: tmux
         args: |
-          splitw -h -p 66 -t %38 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 66% -t %38 -P -F #{window_id}--#{pane_id}
         stdout: "@9--%41"
       - name: tmux
         args: |
-          splitw -h -p 50 -t %41 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 50% -t %41 -P -F #{window_id}--#{pane_id}
         stdout: "@9--%42"
       - name: tmux
         args: |
-          splitw -h -p 50 -t %33 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 50% -t %33 -P -F #{window_id}--#{pane_id}
         stdout: "@9--%43"
       - name: tmux
         args: |
@@ -288,31 +288,31 @@ configs:
         stdout: "@10--%44"
       - name: tmux
         args: |
-          splitw -h -p 60 -t %44 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 60% -t %44 -P -F #{window_id}--#{pane_id}
         stdout: "@10--%45"
       - name: tmux
         args: |
-          splitw -h -p 33 -t %45 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 33% -t %45 -P -F #{window_id}--#{pane_id}
         stdout: "@10--%46"
       - name: tmux
         args: |
-          splitw -v -p 50 -t %46 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 50% -t %46 -P -F #{window_id}--#{pane_id}
         stdout: "@10--%47"
       - name: tmux
         args: |
-          splitw -v -p 75 -t %45 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 75% -t %45 -P -F #{window_id}--#{pane_id}
         stdout: "@10--%48"
       - name: tmux
         args: |
-          splitw -v -p 33 -t %48 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 33% -t %48 -P -F #{window_id}--#{pane_id}
         stdout: "@10--%49"
       - name: tmux
         args: |
-          splitw -v -p 75 -t %44 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 75% -t %44 -P -F #{window_id}--#{pane_id}
         stdout: "@10--%50"
       - name: tmux
         args: |
-          splitw -v -p 66 -t %50 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 66% -t %50 -P -F #{window_id}--#{pane_id}
         stdout: "@10--%51"
       - name: tmux
         args: |
@@ -320,31 +320,31 @@ configs:
         stdout: "@11--%52"
       - name: tmux
         args: |
-          splitw -h -p 25 -t %52 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 25% -t %52 -P -F #{window_id}--#{pane_id}
         stdout: "@11--%53"
       - name: tmux
         args: |
-          splitw -v -p 66 -t %52 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 66% -t %52 -P -F #{window_id}--#{pane_id}
         stdout: "@11--%54"
       - name: tmux
         args: |
-          splitw -h -p 33 -t %54 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 33% -t %54 -P -F #{window_id}--#{pane_id}
         stdout: "@11--%55"
       - name: tmux
         args: |
-          splitw -v -p 50 -t %55 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 50% -t %55 -P -F #{window_id}--#{pane_id}
         stdout: "@11--%56"
       - name: tmux
         args: |
-          splitw -v -p 50 -t %54 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 50% -t %54 -P -F #{window_id}--#{pane_id}
         stdout: "@11--%57"
       - name: tmux
         args: |
-          splitw -h -p 50 -t %57 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 50% -t %57 -P -F #{window_id}--#{pane_id}
         stdout: "@11--%58"
       - name: tmux
         args: |
-          splitw -h -p 66 -t %52 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 66% -t %52 -P -F #{window_id}--#{pane_id}
         stdout: "@11--%59"
       - name: tmux
         args: |
@@ -352,39 +352,39 @@ configs:
         stdout: "@12--%60"
       - name: tmux
         args: |
-          splitw -h -p 75 -t %60 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 75% -t %60 -P -F #{window_id}--#{pane_id}
         stdout: "@12--%61"
       - name: tmux
         args: |
-          splitw -h -p 66 -t %61 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 66% -t %61 -P -F #{window_id}--#{pane_id}
         stdout: "@12--%62"
       - name: tmux
         args: |
-          splitw -h -p 50 -t %62 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 50% -t %62 -P -F #{window_id}--#{pane_id}
         stdout: "@12--%63"
       - name: tmux
         args: |
-          splitw -v -p 66 -t %62 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 66% -t %62 -P -F #{window_id}--#{pane_id}
         stdout: "@12--%64"
       - name: tmux
         args: |
-          splitw -v -p 50 -t %64 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 50% -t %64 -P -F #{window_id}--#{pane_id}
         stdout: "@12--%65"
       - name: tmux
         args: |
-          splitw -v -p 66 -t %61 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 66% -t %61 -P -F #{window_id}--#{pane_id}
         stdout: "@12--%66"
       - name: tmux
         args: |
-          splitw -v -p 50 -t %66 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 50% -t %66 -P -F #{window_id}--#{pane_id}
         stdout: "@12--%67"
       - name: tmux
         args: |
-          splitw -v -p 66 -t %60 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 66% -t %60 -P -F #{window_id}--#{pane_id}
         stdout: "@12--%68"
       - name: tmux
         args: |
-          splitw -v -p 50 -t %68 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 50% -t %68 -P -F #{window_id}--#{pane_id}
         stdout: "@12--%69"
       - name: tmux
         args: |
@@ -392,27 +392,27 @@ configs:
         stdout: "@13--%70"
       - name: tmux
         args: |
-          splitw -h -p 50 -t %70 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 50% -t %70 -P -F #{window_id}--#{pane_id}
         stdout: "@13--%71"
       - name: tmux
         args: |
-          splitw -v -p 83 -t %71 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 83% -t %71 -P -F #{window_id}--#{pane_id}
         stdout: "@13--%72"
       - name: tmux
         args: |
-          splitw -v -p 60 -t %72 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 60% -t %72 -P -F #{window_id}--#{pane_id}
         stdout: "@13--%73"
       - name: tmux
         args: |
-          splitw -v -p 33 -t %73 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 33% -t %73 -P -F #{window_id}--#{pane_id}
         stdout: "@13--%74"
       - name: tmux
         args: |
-          splitw -v -p 66 -t %70 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 66% -t %70 -P -F #{window_id}--#{pane_id}
         stdout: "@13--%75"
       - name: tmux
         args: |
-          splitw -v -p 50 -t %75 -P -F #{window_id}--#{pane_id}
+          splitw -v -l 50% -t %75 -P -F #{window_id}--#{pane_id}
         stdout: "@13--%76"
   - id: 4
     ignore: False
@@ -567,7 +567,7 @@ configs:
         stdout: "@0--%1"
       - name: tmux
         args: |
-          splitw -h -p 50 -t %1 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 50% -t %1 -P -F #{window_id}--#{pane_id}
         stdout: invalid_message
   - id: 11
     ignore: False
@@ -590,7 +590,7 @@ configs:
         stdout: "@0--%1"
       - name: tmux
         args: |
-          splitw -h -p 50 -t %1 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 50% -t %1 -P -F #{window_id}--#{pane_id}
         stderr: message in std err
         err: message in err
         exitCode: 1234
@@ -633,15 +633,15 @@ configs:
         stdout: "@0--%0"
       - name: tmux
         args: |
-          splitw -h -p 75 -t %0 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 75% -t %0 -P -F #{window_id}--#{pane_id}
         stdout: "@0--%1"
       - name: tmux
         args: |
-          splitw -h -p 66 -t %1 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 66% -t %1 -P -F #{window_id}--#{pane_id}
         stdout: "@0--%2"
       - name: tmux
         args: |
-          splitw -h -p 50 -t %2 -P -F #{window_id}--#{pane_id}
+          splitw -h -l 50% -t %2 -P -F #{window_id}--#{pane_id}
         stdout: "@0--%3"
       - name: tmux
         args: |

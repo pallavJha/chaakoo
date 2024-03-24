@@ -40,9 +40,6 @@ func (c TmuxWrapperTestSuite) testTmuxWrapperApply(t *testing.T) {
 		if testCase.Ignore {
 			continue
 		}
-		if testCase.ID == 13 {
-			t.Log("testing, id", testCase.ID)
-		}
 		t.Log("testing, id", testCase.ID)
 		config := &Config{
 			SessionName: testCase.SessionName,
@@ -85,6 +82,6 @@ func adjustSendKeysArgs(args []string) []string {
 	}
 	var newArgs = make([]string, 3)
 	copy(newArgs, args[0:3])
-	newArgs = append(newArgs, strings.Join(args[3:len(args) - 1], " "), "C-m")
+	newArgs = append(newArgs, strings.Join(args[3:len(args)-1], " "), "C-m")
 	return newArgs
 }
