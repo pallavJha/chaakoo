@@ -17,6 +17,7 @@ type TmuxWrapperTestCase struct {
 	Dimension   *Dimension
 	SessionName string
 	Windows     []*Window
+	Sessions    []*Session
 	Commands    []*struct {
 		Name     string
 		Args     string
@@ -41,9 +42,17 @@ func (c TmuxWrapperTestSuite) testTmuxWrapperApply(t *testing.T) {
 			continue
 		}
 		t.Log("testing, id", testCase.ID)
+		var sessions []*Session
+		if len(testCase.Sessions) > 0 {
+			sessions = testCase.Sessions
+		} else {
+			sessions = []*Session{{
+				Name:    testCase.SessionName,
+				Windows: testCase.Windows,
+			}}
+		}
 		config := &Config{
-			SessionName: testCase.SessionName,
-			Windows:     testCase.Windows,
+			Sessions: sessions,
 		}
 		err := config.Validate()
 		require.NoError(t, err)

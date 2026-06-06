@@ -1,11 +1,12 @@
 package cmd
 
 import (
+	"os"
+	"time"
+
 	"github.com/pallavJha/chaakoo"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"os"
-	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -30,11 +31,38 @@ var (
 				log.Info().Msgf("version: %s", version)
 				return
 			}
+
+			attemptLegacyConfigCoercion := false
 			var config chaakoo.Config
 			if err := viper.Unmarshal(&config); err != nil {
-				// TODO: add helpful example for a config
-				log.Fatal().Err(err).Msg("cannot unmarshal the config")
+				// Try unmarshalling into the legacy config
+				log.Warn().Err(err).Msg("failed to unmarshal the config, attempting to unmarshal as legacy config ...")
+				attemptLegacyConfigCoercion = true
 			}
+			if len(config.Sessions) == 0 {
+				log.Warn().Msg("config has 0 sessions, attempting to unmarshal as legacy config ...")
+				attemptLegacyConfigCoercion = true
+			}
+			if attemptLegacyConfigCoercion {
+				var configLegacy chaakoo.ConfigLegacy
+				if err := viper.Unmarshal(&configLegacy); err != nil {
+					// TODO: add helpful example for a config
+					log.Fatal().Err(err).Msg("cannot unmarshal the config")
+
+				}
+				// Coercing ConfigLegacy to Config
+				var session = chaakoo.Session{
+					Name:    configLegacy.SessionName,
+					Windows: configLegacy.Windows,
+				}
+				config = chaakoo.Config{
+					Sessions:    []*chaakoo.Session{&session},
+					DryRun:      configLegacy.DryRun,
+					ExitOnError: configLegacy.ExitOnError,
+				}
+			}
+			log.Info().Msg("unmarshalling successful")
+
 			if err := config.Validate(); err != nil {
 				log.Fatal().Err(err).Msg("validation errors found in the config")
 			}
@@ -63,8 +91,8 @@ var (
 			if err != nil {
 				log.Fatal().Err(err).Msg("error while applying the config")
 			}
-			log.Info().Msg("session created successfully, it can be attached by executing:")
-			log.Info().Msgf("tmux a -t %s", config.SessionName)
+			log.Info().Msg("sessions created successfully, the first session can be attached by executing:")
+			log.Info().Msgf("tmux a -t %s", config.Sessions[0].Name)
 		},
 	}
 )

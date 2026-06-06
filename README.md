@@ -38,7 +38,55 @@ grafana grafana grafana grafana
 
 ## Configuration
 
-A configuration yaml for one window with 3 panes, like, the first example, is here:
+Chaakoo supports multiple sessions in a single config file:
+
+```yaml
+sessions:
+  - name: code-environment
+    windows:
+      - grid: |
+          vim  vim  vim  term
+          vim  vim  vim  term
+          play play play play
+        name: window1
+        commands:
+          - pane: vim
+            command: |
+              vim
+          - pane: term
+            command: |
+              cd ~
+              systemctl status
+            workdir: /home/waterbottle/code
+          - pane: play
+            command: |
+              tail -f /var/log/messages
+  - name: monitoring
+    windows:
+      - grid: |
+          logs metrics
+        name: window1
+```
+
+- `sessions` is an array of TMUX sessions to create
+- Each session contains:
+  - `name` - The TMUX session name
+  - `windows` - An array of windows
+- Each window contains:
+  - `name` - The name of the window
+  - `grid` - 2D layout or the grid, each distinct name in the layout represents a pane
+  - `commands` - An array of the commands that will be executed in a pane
+  - Each command object contains:
+    - `pane` - Name of the pane
+    - `command` - Can contain multi line text for the commands
+    - `workdir` - Pane's first directory. It can further be changed by `cd` present in `command`
+
+**Note**: The `commands` section or commands for a pane are not a required field. Chaakoo can just be used to create the pane layout and then the user can take over and execute their commands.
+
+### Legacy config format
+
+The older single-session format is still supported:
+
 ```yaml
 name: code-environment
 windows:
@@ -47,33 +95,7 @@ windows:
       vim  vim  vim  term
       play play play play
     name: window1
-    commands:
-      - pane: vim
-        command: |
-          vim
-      - pane: term
-        command: |
-          cd ~
-          systemctl status
-        workdir: /home/waterbottle/code
-      - pane: play
-        command: |
-          tail -f /var/log/messages
 ```
-
-- `name` is the TMUX session name
-- `windows` is an array of windows
-- Each window contains
-  - `name` - The name of the window
-  - `grid` - 2D layout or the grid, each distinct name in the layout represents a pane.
-  - `commands` is an array of the commands that will be executed in a pane
-  - Each command object contains:
-    - `pane` - Name of the pane
-    - `command` - Can contain multi line text for the commands
-    - `workdir` - Pane's first directory. It can further be changed by `cd` present in `command`
-
-**Note**: The `commands` section or commands for a pane are not a required field. Chaakoo can just be used to create the pane 
-layout and then the user can take over and execute their commands.
 
 ## Using Chaakoo
 
@@ -86,7 +108,7 @@ $ tmux start-server
 # and then pass the config to Chaakoo
 $ chaakoo -c examples/1/chaakoo.yaml 
 4:43PM ERR github.com/pallavJha/chaakoo/tmux_wrapper.go:349 > unable to get the list of the present sessions error="exit status 1" sessionName=code-environment stderr="no server running on /tmp/tmux-1000/default\n" stdout=
-4:43PM INF github.com/pallavJha/chaakoo/cmd/chaakoo.go:66 > session created successfully, it can be attached by executing:
+4:43PM INF github.com/pallavJha/chaakoo/cmd/chaakoo.go:66 > sessions created successfully, the first session can be attached by executing:
 4:43PM INF github.com/pallavJha/chaakoo/cmd/chaakoo.go:67 > tmux a -t code-environment
 
 # Attach the TMUX session

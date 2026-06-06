@@ -4,11 +4,12 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/rs/zerolog/log"
 	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/rs/zerolog/log"
 )
 
 // CommandName contains the tmux name.
@@ -64,41 +65,43 @@ func NewTmuxWrapper(config *Config, dimensions *Dimension) *TmuxWrapper {
 }
 
 // Apply does:
-// 	- checks if the requested session is already present
-// 	- creates a new session for the current config
-// 	- creates windows and panes
-// 	- executes the command of the provided config
+//   - checks if the requested session is already present
+//   - creates a new session for the current config
+//   - creates windows and panes
+//   - executes the command of the provided config
 func (t *TmuxWrapper) Apply() error {
-	if present, err := t.hasSession(t.config.SessionName); err != nil {
-		return err
-	} else if present {
-		log.Debug().Msgf("session with same name, %s, is already present", t.config.SessionName)
-		return fmt.Errorf("session with same name, %s, is already present", t.config.SessionName)
-	}
-	res, err := t.newSession(t.config.SessionName, t.config.Windows[0].Name, t.dimension)
-	if err != nil {
-		return fmt.Errorf("cannot create the session: %w", err)
-	}
-	var paneNames = make(map[string]string)
-	paneNames[t.config.Windows[0].FirstPane.Name] = res.PaneID
-	if err = t.walkPane(t.config.Windows[0].FirstPane, paneNames); err != nil {
-		return fmt.Errorf("cannot walk the pane: %w", err)
-	}
-	if err = t.handleRunCommands(t.config.Windows[0], paneNames); err != nil {
-		return err
-	}
-	for i := 1; i < len(t.config.Windows); i++ {
-		res, err = t.newWindow(t.config.SessionName, t.config.Windows[i].Name)
+	for _, session := range t.config.Sessions {
+		if present, err := t.hasSession(session.Name); err != nil {
+			return err
+		} else if present {
+			log.Debug().Msgf("session with same name, %s, is already present", session.Name)
+			return fmt.Errorf("session with same name, %s, is already present", session.Name)
+		}
+		res, err := t.newSession(session.Name, session.Windows[0].Name, t.dimension)
 		if err != nil {
-			return fmt.Errorf("cannot create the window, %s: %w", t.config.Windows[i].Name, err)
+			return fmt.Errorf("cannot create the session: %w", err)
 		}
-		paneNames = make(map[string]string)
-		paneNames[t.config.Windows[i].FirstPane.Name] = res.PaneID
-		if err = t.walkPane(t.config.Windows[i].FirstPane, paneNames); err != nil {
+		var paneNames = make(map[string]string)
+		paneNames[session.Windows[0].FirstPane.Name] = res.PaneID
+		if err = t.walkPane(session.Windows[0].FirstPane, paneNames); err != nil {
+			return fmt.Errorf("cannot walk the pane: %w", err)
+		}
+		if err = t.handleRunCommands(session.Windows[0], paneNames); err != nil {
 			return err
 		}
-		if err = t.handleRunCommands(t.config.Windows[i], paneNames); err != nil {
-			return err
+		for i := 1; i < len(session.Windows); i++ {
+			res, err = t.newWindow(session.Name, session.Windows[i].Name)
+			if err != nil {
+				return fmt.Errorf("cannot create the window, %s: %w", session.Windows[i].Name, err)
+			}
+			paneNames = make(map[string]string)
+			paneNames[session.Windows[i].FirstPane.Name] = res.PaneID
+			if err = t.walkPane(session.Windows[i].FirstPane, paneNames); err != nil {
+				return err
+			}
+			if err = t.handleRunCommands(session.Windows[i], paneNames); err != nil {
+				return err
+			}
 		}
 	}
 	return nil
@@ -151,18 +154,22 @@ func (t *TmuxWrapper) runCommands(window *Window, paneNames map[string]string) e
 // walkPane decides whether to create the left pane or the bottom pane from the current pane
 // It is decided based on the height and width of the child panes.
 // If the left pane's height is same as the current pane then the left pane is created.
+//
 //	-----------
 //	|    |    |
 //	|----|    |
 //	|    |    |
 //	-----------
+//
 // Here the left pane will be created before the bottom pane.
 // However, in this(V) case:
+//
 //	-----------
 //	|    |    |
 //	|----|----|
 //	|         |
 //	-----------
+//
 // the bottom pane will be created first and then the left pane will be created from the remaining area
 func (t *TmuxWrapper) walkPane(currentPane *Pane, paneNames map[string]string) error {
 	currentPane.reset()

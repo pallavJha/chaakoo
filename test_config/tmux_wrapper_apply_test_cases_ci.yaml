@@ -699,3 +699,68 @@ configs:
         stderr: msg in std error
         err: msg in error
         exitCode: 1234
+  - id: 14
+    ignore: False
+    dimension:
+      width: 274
+      height: 81
+    sessions:
+      - name: multiSession14A
+        windows:
+          - grid: |
+              vim play
+            name: win14A
+      - name: multiSession14B
+        windows:
+          - grid: |
+              vim
+            name: win14B
+    commands:
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+      - name: tmux
+        args: |
+          new-session -d -s multiSession14A -n win14A -x 274 -y 81 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%0"
+      - name: tmux
+        args: |
+          splitw -h -l 50% -t %0 -P -F #{window_id}--#{pane_id}
+        stdout: "@0--%1"
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+      - name: tmux
+        args: |
+          new-session -d -s multiSession14B -n win14B -x 274 -y 81 -P -F #{window_id}--#{pane_id}
+        stdout: "@1--%2"
+  - id: 15
+    ignore: False
+    dimension:
+      width: 274
+      height: 81
+    error: "session with same name, multiSession15B, is already present"
+    sessions:
+      - name: multiSession15A
+        windows:
+          - grid: |
+              vim
+            name: win15A
+      - name: multiSession15B
+        windows:
+          - grid: |
+              vim
+            name: win15B
+    commands:
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+      - name: tmux
+        args: |
+          new-session -d -s multiSession15A -n win15A -x 274 -y 81 -P -F #{window_id}--#{pane_id}
+        stdout: "@2--%3"
+      - name: tmux
+        args: |
+          ls -F #{session_name}
+        stdout: |
+          multiSession15B
